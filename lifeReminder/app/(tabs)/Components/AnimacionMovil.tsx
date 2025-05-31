@@ -7,19 +7,19 @@ type FadeInTextProps = {
     style?: StyleProp<TextStyle>;
 };
 
-export default function AnimacionYa({ children, duration = 2000, style }: FadeInTextProps) {
-    const fadeAnim = useRef(new Animated.Value(0)).current;
+export default function FadeInText({ children, duration = 2000, style }: FadeInTextProps) {
+    const animacionMovil = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        Animated.timing(fadeAnim, {
-            toValue: 1,
+        Animated.timing(animacionMovil, {
+            toValue: 2,
             duration,
             useNativeDriver: true,
         }).start();
-    }, [fadeAnim, duration]);
+    }, [animacionMovil, duration]);
 
     return (
-        <Animated.Text style={[{ opacity: fadeAnim }, style]}>
+        <Animated.Text style={[{ opacity: animacionMovil }, style]}>
             {children }
         </Animated.Text>
     )

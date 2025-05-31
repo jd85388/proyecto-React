@@ -1,12 +1,16 @@
-import  { View, Text, Image, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import  { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter }from 'expo-router';
 import AnimacionYa from '../app/(tabs)/Components/AnimacionMovil';
-import ModeloCurva from './(tabs)/Components/modeloCurva';
+import AnimacionEfecto from './(tabs)/Components/AnimacionElement';
 
 export default function home() {
     const router = useRouter();
 
     return (
+
+        <ImageBackground
+        source={require('../app/(tabs)/assets/fondoPantalla.jpg')}
+        style={estilos.imagen2}>
         <View style={estilos.contenedor}>
             <View style={estilos.parteSuperior}>
 
@@ -22,21 +26,26 @@ export default function home() {
             </View>
             <View style={estilos.parteInferior}>
 
-            <AnimacionYa style={estilos.titulo2} duration={3000}>
+            <AnimacionYa style={estilos.titulo2} duration={2000}>
                 Para Nosotros Cuidar De Tu Salud Es Muy Importante, 
                 Juntos Podemos Cuidar De Ti.
             </AnimacionYa>
 
+            <AnimacionEfecto duration={3000} >
             <TouchableOpacity style={estilos.boton} onPress={() => router.push('/login')}>
                 <Text style={estilos.textoBoton}>Iniciar Sesión</Text>
             </TouchableOpacity>
+            </AnimacionEfecto>
 
+            <AnimacionEfecto duration={3000}>
             <TouchableOpacity style={estilos.boton} onPress={() => router.push('/Registro')}> 
                 <Text style={estilos.textoBoton}>Registrarse</Text>
             </TouchableOpacity>
-            </View>
-        
+            </AnimacionEfecto>
+
+            </View>        
         </View>
+        </ImageBackground>
     );
 }
 
@@ -101,7 +110,6 @@ const estilos = StyleSheet.create({
     parteSuperior: {
         width: '100%',
         flex: 1,
-        backgroundColor: '#1E90FF',
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingBottom: 30
@@ -120,5 +128,10 @@ const estilos = StyleSheet.create({
         paddingHorizontal: 20,
         alignItems: 'center',
         paddingBottom: 40
+    },
+    imagen2: {
+        flex: 1,
+        width: '100%',
+        height: '100%'
     }
 })
