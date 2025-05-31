@@ -9,7 +9,7 @@ export default function home() {
     return (
 
         <ImageBackground
-        source={require('../app/(tabs)/assets/fondoPantalla.jpg')}
+        source={require('../app/(tabs)/assets/fondo2.png')}
         style={estilos.imagen2}>
         <View style={estilos.contenedor}>
             <View style={estilos.parteSuperior}>
@@ -31,13 +31,13 @@ export default function home() {
                 Juntos Podemos Cuidar De Ti.
             </AnimacionYa>
 
-            <AnimacionEfecto duration={3000} >
+            <AnimacionEfecto duration={2000} >
             <TouchableOpacity style={estilos.boton} onPress={() => router.push('/login')}>
                 <Text style={estilos.textoBoton}>Iniciar Sesión</Text>
             </TouchableOpacity>
             </AnimacionEfecto>
 
-            <AnimacionEfecto duration={3000}>
+            <AnimacionEfecto duration={2000}>
             <TouchableOpacity style={estilos.boton} onPress={() => router.push('/Registro')}> 
                 <Text style={estilos.textoBoton}>Registrarse</Text>
             </TouchableOpacity>
