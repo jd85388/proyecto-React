@@ -4,11 +4,11 @@
     "slug": "lifeReminder",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "icon":"./assets/Logo2.png",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/Logo2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

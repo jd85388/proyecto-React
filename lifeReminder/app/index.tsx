@@ -1,6 +1,6 @@
 import  { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter }from 'expo-router';
-import AnimacionYa from '../app/(tabs)/Components/AnimacionMovil';
+import AnimacionYa from './(tabs)/Components/AnimacionMovil';
 import AnimacionEfecto from './(tabs)/Components/AnimacionElement';
 
 export default function home() {
@@ -9,7 +9,7 @@ export default function home() {
     return (
 
         <ImageBackground
-        source={require('../app/(tabs)/assets/fondo2.png')}
+        source={require('./(tabs)/assets/fondo2.png')}
         style={estilos.imagen2}>
         <View style={estilos.contenedor}>
             <View style={estilos.parteSuperior}>
@@ -32,13 +32,13 @@ export default function home() {
             </AnimacionYa>
 
             <AnimacionEfecto duration={2000} >
-            <TouchableOpacity style={estilos.boton} onPress={() => router.push('/login')}>
+            <TouchableOpacity style={estilos.boton} onPress={() => router.push('/View/login')}>
                 <Text style={estilos.textoBoton}>Iniciar Sesión</Text>
             </TouchableOpacity>
             </AnimacionEfecto>
 
             <AnimacionEfecto duration={2000}>
-            <TouchableOpacity style={estilos.boton} onPress={() => router.push('/Registro')}> 
+            <TouchableOpacity style={estilos.boton} onPress={() => router.push('/View/Registro')}> 
                 <Text style={estilos.textoBoton}>Registrarse</Text>
             </TouchableOpacity>
             </AnimacionEfecto>

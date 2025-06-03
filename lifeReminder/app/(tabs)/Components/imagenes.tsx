@@ -24,7 +24,7 @@ export default function ImagenCualquiera({
 }
 const estilos = StyleSheet.create({
     imagen: {
-      marginBottom: 30,
-      alignContent: 'center'
+      marginBottom: 25,
+      justifyContent: 'center'
     },
 });

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput,StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { router, useRouter } from 'expo-router';
-import AnimacionYa from './Components/AnimacionMovil';
-import AnimacionEfecto from './Components/AnimacionElement';
+import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
+import AnimacionEfecto from '../(tabs)/Components/AnimacionElement';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
@@ -74,7 +74,7 @@ export default function Login() {
           <Text style={Estilos.cuentas}>Iniciar Sesión</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={Estilos.recuperacion} onPress={() => router.push('/recuperacion') }>
+        <TouchableOpacity style={Estilos.recuperacion} onPress={() => router.push('/View/recuperacion') }>
           <Text style={Estilos.textoRecuperacion}>Olvidaste la contraseña?</Text>
         </TouchableOpacity>
 
@@ -119,7 +119,7 @@ const Estilos = StyleSheet.create({
     },
     input: {
       backgroundColor: 'white',
-      width: 330,
+      width: 350,
       height: 50,
       borderRadius: 20,
       marginBottom: 15,

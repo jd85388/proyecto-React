@@ -1,9 +1,9 @@
 import {Text, TextInput, ImageBackground, View, StyleSheet} from 'react-native';
-import AnimacionYa from './Components/AnimacionMovil';
-import FondoImagen from './Components/fondoPantalla';
+import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
+import FondoImagen from '../(tabs)/Components/fondoPantalla';
 import React from 'react';
-import ImagenCualquiera from './Components/imagenes';
-import MiBotonUtil from './Components/Botones';
+import ImagenCualquiera from '../(tabs)/Components/imagenes';
+import MiBotonUtil from '../(tabs)/Components/Botones';
 import { router } from 'expo-router';
 
 export default function recuperar() {
