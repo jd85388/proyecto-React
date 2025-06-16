@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target":"Es2020",
+    "module":"ES2020",
+    "moduleResolution": "node",
+    "rootDir": "./backend",
+    "outDir": "./backend/dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "backend/**/*.ts"
+  ],
+  "exclude": [
+    "app", 
+    "node_modules"
+  ]
+}

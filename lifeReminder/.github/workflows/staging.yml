@@ -1,0 +1,25 @@
+name: Validación con Staging
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    name: Ejecutor de pruebas y construcción
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Simular despliegue a staging
+        run: echo "Desplegando a staging..."
