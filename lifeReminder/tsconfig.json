@@ -1,25 +1,13 @@
 {
-  "compilerOptions": {
-    "target": "Es2020",
-    "module": "Node16",
-    "moduleResolution": "node16",
-    "rootDir": "./backend",
-    "outDir": "./backend/dist",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["*"] 
+  "files": [],
+  "references": [
+    {
+      "path": "./backend"
+    },
+    {
+      "path": "./frontend"
     }
-  },
-  "include": [
-    "backend/**/*.ts"
   ],
-  "exclude": [
-    "app",
-    "node_modules"
-  ],
+  "compilerOptions": {},
   "extends": "expo/tsconfig.base"
 }

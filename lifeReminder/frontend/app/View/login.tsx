@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput,StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { router, useRouter } from 'expo-router';
-import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
-import AnimacionEfecto from '../(tabs)/Components/AnimacionElement';
+import AnimacionYa from '../(tabs)/Components/AnimacionMovil.tsx';
+import AnimacionEfecto from '../(tabs)/Components/AnimacionElement.tsx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
