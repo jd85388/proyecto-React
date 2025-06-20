@@ -106,7 +106,7 @@ export default function registro() {
             </View>
 
             <MiBotonUtil texto='REGISTRARME' onPress={(validarDatos)}/>
-            {mensaje !== '' &&(<Text style={{color: 'red', marginTop: 10}}>{mensaje}</Text>)}
+            
         </View>
        </FondoImagen>
      )}

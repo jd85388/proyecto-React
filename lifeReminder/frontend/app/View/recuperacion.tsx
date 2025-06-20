@@ -1,5 +1,4 @@
 import {Text, TextInput, ImageBackground, View, StyleSheet} from 'react-native';
-import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
 import FondoImagen from '../(tabs)/Components/fondoPantalla';
 import React from 'react';
 import ImagenCualquiera from '../(tabs)/Components/imagenes';

@@ -24,15 +24,39 @@ export default function Login() {
     cargarDatos();
   }, []);
   const manejar = async () => {
+  try {
     if (recordar) {
-    await AsyncStorage.setItem('correo', correo);
-    await AsyncStorage.setItem('password', password);
+      await AsyncStorage.setItem('correo', correo);
+      await AsyncStorage.setItem('password', password);
     } else {
       await AsyncStorage.removeItem('correo');
       await AsyncStorage.removeItem('password');
     }
-    console.log('Iniciar Sesión con:', correo, password);
-  };
+
+    const response = await fetch('http://192.168.1.10:3000/api/paciente/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        correo,
+        password
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log('Bienvenido ', data);
+      router.push('/View/menu'); 
+    } else {
+      console.log('Error al iniciar sesión:', data.message);
+    }
+  } catch (error) {
+    console.error('Error de red o servidor:', error);
+  }
+};
+
 
   return (
     <ImageBackground
