@@ -6,6 +6,7 @@ import AnimacionYa from '../../(tabs)/Components/AnimacionMovil';
 import MiBotonUtil from "../../(tabs)/Components/Botones";
 import { Picker } from "@react-native-picker/picker";
 import  DateTimePicker, { DateTimePickerEvent }  from "@react-native-community/datetimepicker";
+import { useRouter } from 'expo-router';
 
 export default function registro() {
     const [nombre, setNombre] = useState('');
@@ -19,7 +20,7 @@ export default function registro() {
     const mostrarFecha = () => {
         setMostrarCalendario(true);
     };
-
+    const router = useRouter();
     const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
         if (event.type === 'dismissed') {
             Alert.alert('fecha requerida','porfavor seleccionar una fecha valida');
@@ -31,17 +32,43 @@ export default function registro() {
             setFechaNacimiento(selectedDate);
         }
     };
-    const validarDatos = () => {
-        if(!nombre || !apellido || !rh || !correo || !password) {
-            setMensaje('falta llenar campos obligatorios');
+    const validarDatos = async ()  => {
+        try {
+        if(!nombre || !apellido || !rh || !fechaNacimiento || !correo || !password) {
+            Alert.alert("Problemas para registrar", "Es necesario que complete todos los campos requeridos para poder registrarte con exito")
             return;
         }
-        if(!/\S+@\S+\.\S+/.test(correo)){
+        if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)){
             setMensaje("Correo Invalido");
             return;
         }else {
-            setMensaje('felicitaciones te registraste')
+            console.log("correo valido")
         }
+        const response = await fetch('http://192.168.1.10:3000/api/registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify({
+                nombre,
+                apellido,
+                rh,
+                fechaNacimiento,
+                correo,
+                password
+            })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            Alert.alert("Bienvenido a Life Reminder", "Felicidades fuiste registrado con exito, es para nosotros un gusto darte la bienvenida a Life Reminder");
+            router.push('/View/login');
+        }else {
+            Alert.alert("Registro Fallido", `Lamentamos no poder registrarte te pedimos que revises la informacion ingresada. ${data.message}`);
+        }
+     } catch (e) {
+        console.error('Error de conexion', e);
+        Alert.alert('perdimos la conexion a internet, vuelve  intentar mas tarde')
+     }
     };
 
     //Desde esta parte inicia el diseño
@@ -110,9 +137,10 @@ export default function registro() {
                 </View>
 
             </View>
-
-            <MiBotonUtil texto='REGISTRARME' onPress={(validarDatos)}/>
-            
+            <TouchableOpacity style={estilo.registro} onPress={(validarDatos)}>
+                    <Text style={estilo.cuentas}>REGISTRARME</Text>
+            </TouchableOpacity>
+    
         </View>
        </FondoImagen>
      )}
@@ -181,5 +209,18 @@ export default function registro() {
         textoFecha: {
             fontSize: 17
         },
+        registro: {
+            backgroundColor: '#1E90FF',
+            width: 360,
+            height: 50,
+            marginBlock: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 14,
+        },
+        cuentas: {
+            color: 'white',
+            fontSize: 16
+        }
       
     })
