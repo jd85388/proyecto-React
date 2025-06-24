@@ -23,4 +23,4 @@ export default function AnimacionEfecto({ children, duration = 2000, style }: Fa
             {children}
         </Animated.View>
     );
-}
+} 

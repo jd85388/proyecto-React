@@ -1,11 +1,11 @@
 import React, { useState,  } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity,Platform  } from "react-native";
-import FondoImagen from "../(tabs)/Components/fondoPantalla";
-import ImagenCualquiera from "../(tabs)/Components/imagenes";
-import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
-import MiBotonUtil from "../(tabs)/Components/Botones";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,Platform, Alert  } from "react-native";
+import FondoImagen from "../../(tabs)/Components/fondoPantalla";
+import ImagenCualquiera from "../../(tabs)/Components/imagenes";
+import AnimacionYa from '../../(tabs)/Components/AnimacionMovil';
+import MiBotonUtil from "../../(tabs)/Components/Botones";
 import { Picker } from "@react-native-picker/picker";
-import  DateTimePicker  from "@react-native-community/datetimepicker";
+import  DateTimePicker, { DateTimePickerEvent }  from "@react-native-community/datetimepicker";
 
 export default function registro() {
     const [nombre, setNombre] = useState('');
@@ -20,10 +20,16 @@ export default function registro() {
         setMostrarCalendario(true);
     };
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || fechaNacimiento;
-        setMostrarCalendario(Platform.OS === 'ios');
-        setFechaNacimiento(currentDate);
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+        if (event.type === 'dismissed') {
+            Alert.alert('fecha requerida','porfavor seleccionar una fecha valida');
+            setMostrarCalendario(true);
+            return;
+        }
+        if (selectedDate) {
+            setMostrarCalendario(Platform.OS === 'ios');
+            setFechaNacimiento(selectedDate);
+        }
     };
     const validarDatos = () => {
         if(!nombre || !apellido || !rh || !correo || !password) {
@@ -40,10 +46,10 @@ export default function registro() {
 
     //Desde esta parte inicia el diseño
      return (
-       <FondoImagen source={require('../(tabs)/assets/fondo2.png')}>
+       <FondoImagen source={require('../../(tabs)/assets/fondo2.png')}>
         <View style={estilo.principal}>
 
-            <ImagenCualquiera source={require('../(tabs)/assets/Logo2.png')}></ImagenCualquiera>
+            <ImagenCualquiera source={require('../../(tabs)/assets/Logo2.png')}></ImagenCualquiera>
             <AnimacionYa style={estilo.titulo} duration={2000}>REGISTRO</AnimacionYa>
             <View style={estilo.contenedorRegistro}>
 

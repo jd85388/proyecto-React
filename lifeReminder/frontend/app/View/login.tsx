@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput,StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
-import { router, useRouter } from 'expo-router';
-import AnimacionYa from '../(tabs)/Components/AnimacionMovil.tsx';
-import AnimacionEfecto from '../(tabs)/Components/AnimacionElement.tsx';
+import {  useRouter } from 'expo-router';
+import AnimacionYa from '../../(tabs)/Components/AnimacionMovil';
+import AnimacionEfecto from '../../(tabs)/Components/AnimacionElement';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [recordar, setRecordar] = useState(false);
 
+  const router = useRouter();
   useEffect(() => {
     const cargarDatos = async () => {
       const correoGuardado = await AsyncStorage.getItem('correo');
@@ -33,7 +34,7 @@ export default function Login() {
       await AsyncStorage.removeItem('password');
     }
 
-    const response = await fetch('http://192.168.1.10:3000/api/paciente/login', {
+    const response = await fetch('http://192.168.1.10:3000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -43,7 +44,6 @@ export default function Login() {
         password
       })
     });
-
     const data = await response.json();
 
     if (response.ok) {
@@ -60,13 +60,13 @@ export default function Login() {
 
   return (
     <ImageBackground
-      source={require('../(tabs)/assets/fondo2.png')}
+      source={require('../../(tabs)/assets/fondo2.png')}
       style={Estilos.imagen2}
       resizeMode='stretch'>
 
     <View style={Estilos.contenedorPrincipal}>
       <Image 
-        source={require('../(tabs)/assets/Logo2.png')}
+        source={require('../../(tabs)/assets/Logo2.png')}
         style={Estilos.imagen}/>
         <AnimacionYa style={Estilos.titulo} duration={2000}>
               LIFE REMINDER

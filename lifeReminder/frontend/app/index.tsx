@@ -1,7 +1,7 @@
 import  { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter }from 'expo-router';
-import AnimacionYa from './(tabs)/Components/AnimacionMovil';
-import AnimacionEfecto from './(tabs)/Components/AnimacionElement';
+import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
+import AnimacionEfecto from '../(tabs)/Components/AnimacionElement';
 
 export default function home() {
     const router = useRouter();
@@ -9,13 +9,13 @@ export default function home() {
     return (
 
         <ImageBackground
-        source={require('./(tabs)/assets/fondo2.png')}
+        source={require('../(tabs)/assets/fondo2.png')}
         style={estilos.imagen2}>
         <View style={estilos.contenedor}>
             <View style={estilos.parteSuperior}>
 
                 <Image 
-            source={require('./(tabs)/assets/caraBonita.png')}
+            source={require('../(tabs)/assets/caraBonita.png')}
             style={estilos.imagen}
             />
 

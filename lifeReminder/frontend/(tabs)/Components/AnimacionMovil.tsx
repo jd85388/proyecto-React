@@ -12,7 +12,7 @@ export default function FadeInText({ children, duration = 2000, style }: FadeInT
 
     useEffect(() => {
         Animated.timing(animacionMovil, {
-            toValue: 2,
+            toValue: 1,
             duration,
             useNativeDriver: true,
         }).start();

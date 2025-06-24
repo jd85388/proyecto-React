@@ -1,16 +1,16 @@
 import {Text, TextInput, ImageBackground, View, StyleSheet} from 'react-native';
-import FondoImagen from '../(tabs)/Components/fondoPantalla';
+import FondoImagen from '../../(tabs)/Components/fondoPantalla';
 import React from 'react';
-import ImagenCualquiera from '../(tabs)/Components/imagenes';
-import MiBotonUtil from '../(tabs)/Components/Botones';
+import ImagenCualquiera from '../../(tabs)/Components/imagenes';
+import MiBotonUtil from '../../(tabs)/Components/Botones';
 import { router } from 'expo-router';
 
 export default function recuperar() {
     return(
-        <FondoImagen source={require('../(tabs)/assets/fondo2.png')}>
+        <FondoImagen source={require('../../(tabs)/assets/fondo2.png')}>
 
             <View style={estilos.contenedorPrincipal}>
-            <ImagenCualquiera source={require('../(tabs)/assets/Logo2.png')}></ImagenCualquiera>
+            <ImagenCualquiera source={require('../../(tabs)/assets/Logo2.png')}></ImagenCualquiera>
             <Text style={estilos.texto}>LIFE REMINDER</Text>
             <View style={estilos.contenedor}>
                 <Text style={estilos.texto2}>!Lamentamos lo sucedido, ingresa tu correo eletronico y te enviaremos el enlance de recuperacion.</Text>

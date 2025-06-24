@@ -2,7 +2,7 @@
   "name": "lifereminder",
   "version": "1.0.0",
   "scripts": {
-    "dev": "cd frontend && npm run dev ",
+    "dev": "cd frontend && npx expo start --android ",
     "start": "cd backend && npm start",
     "android": "cd frontend && expo start --android",
     "ios": "cd frontend && expo start --ios",
@@ -10,6 +10,6 @@
     "all": "concurrently \"npm run start\" \"npm run dev\""
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.2.0"
   }
 }
