@@ -1,4 +1,4 @@
-// Perfil.tsx
+// C:\Users\USER\Documents\react\proyecto-React\lifeReminder\frontend\app\View\perfil.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -26,7 +26,8 @@ interface PerfilData {
 
 const PerfilScreen = () => {
   const navigation = useNavigation();
-  const { pacienteId } = useRoute<any>().params || {};
+  const route = useRoute();
+  const { pacienteId, nombrePaciente } = route.params;
 
   const [perfil, setPerfil] = useState<PerfilData>({
     id: '',
@@ -41,7 +42,7 @@ const PerfilScreen = () => {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    // obtenemos datos de perfil desde la API
+    // Reemplaza esta URL por tu API real
     fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/perfil`)
       .then(res => res.json())
       .then((data: PerfilData) => setPerfil(data))
@@ -53,50 +54,28 @@ const PerfilScreen = () => {
   }, [pacienteId]);
 
   const handleUpdate = async () => {
-    // validaciones
-    const {
-      nombreCompleto,
-      tipoDocumento,
-      numeroDocumento,
-      telefono,
-      correo
-    } = perfil;
-    if (
-      !nombreCompleto ||
-      !tipoDocumento ||
-      !numeroDocumento ||
-      !telefono ||
-      !correo
-    ) {
+    const { nombreCompleto, tipoDocumento, numeroDocumento, telefono, correo } = perfil;
+
+    if (!nombreCompleto || !tipoDocumento || !numeroDocumento || !telefono || !correo) {
       return Alert.alert('Error', 'Todos los campos son obligatorios');
     }
     if (!/^\d+$/.test(telefono)) {
-      return Alert.alert(
-        'Error',
-        'El número telefónico solo puede contener dígitos'
-      );
+      return Alert.alert('Error', 'El número telefónico solo puede contener dígitos');
     }
     if (!correo.includes('@')) {
       return Alert.alert('Error', 'El correo debe contener el símbolo "@"');
     }
     if (!politicaChecked) {
-      return Alert.alert(
-        'Error',
-        'Debes aceptar la política de privacidad para continuar'
-      );
+      return Alert.alert('Error', 'Debes aceptar la política de privacidad para continuar');
     }
 
-    // envío a la API
     setSaving(true);
     try {
-      const res = await fetch(
-        `https://api.ejemplo.com/pacientes/${pacienteId}/perfil`,
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(perfil)
-        }
-      );
+      const res = await fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/perfil`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(perfil)
+      });
       if (!res.ok) throw new Error();
       Alert.alert('Éxito', 'Tu información ha sido actualizada');
     } catch {
@@ -122,25 +101,19 @@ const PerfilScreen = () => {
       <Text style={styles.title}>PERFIL</Text>
 
       <ScrollView contentContainerStyle={styles.form}>
-        {/* Nombre completo */}
         <Text style={styles.label}>Nombre Completo</Text>
         <TextInput
           style={styles.input}
           value={perfil.nombreCompleto}
-          onChangeText={text =>
-            setPerfil(prev => ({ ...prev, nombreCompleto: text }))
-          }
+          onChangeText={text => setPerfil(prev => ({ ...prev, nombreCompleto: text }))}
           placeholder="Tu nombre"
         />
 
-        {/* Tipo de documento */}
         <Text style={styles.label}>Tipo de Documento</Text>
         <View style={styles.pickerWrapper}>
           <Picker
             selectedValue={perfil.tipoDocumento}
-            onValueChange={value =>
-              setPerfil(prev => ({ ...prev, tipoDocumento: value }))
-            }
+            onValueChange={value => setPerfil(prev => ({ ...prev, tipoDocumento: value }))}
           >
             <Picker.Item label="Selecciona…" value="" />
             <Picker.Item label="Cédula de Ciudadanía" value="cc" />
@@ -149,43 +122,33 @@ const PerfilScreen = () => {
           </Picker>
         </View>
 
-        {/* Número de documento */}
         <Text style={styles.label}>Número de Documento</Text>
         <TextInput
           style={styles.input}
           value={perfil.numeroDocumento}
-          onChangeText={text =>
-            setPerfil(prev => ({ ...prev, numeroDocumento: text }))
-          }
+          onChangeText={text => setPerfil(prev => ({ ...prev, numeroDocumento: text }))}
           placeholder="Número de tu documento"
         />
 
-        {/* Teléfono */}
         <Text style={styles.label}>Número Telefónico</Text>
         <TextInput
           style={styles.input}
           value={perfil.telefono}
-          onChangeText={text =>
-            setPerfil(prev => ({ ...prev, telefono: text }))
-          }
+          onChangeText={text => setPerfil(prev => ({ ...prev, telefono: text }))}
           keyboardType="numeric"
           placeholder="Solo dígitos"
         />
 
-        {/* Correo */}
         <Text style={styles.label}>Correo Electrónico</Text>
         <TextInput
           style={styles.input}
           value={perfil.correo}
-          onChangeText={text =>
-            setPerfil(prev => ({ ...prev, correo: text }))
-          }
+          onChangeText={text => setPerfil(prev => ({ ...prev, correo: text }))}
           keyboardType="email-address"
           autoCapitalize="none"
           placeholder="usuario@ejemplo.com"
         />
 
-        {/* Política de privacidad */}
         <View style={styles.checkboxContainer}>
           <CheckBox
             value={politicaChecked}
@@ -197,7 +160,6 @@ const PerfilScreen = () => {
           </Text>
         </View>
 
-        {/* Botón actualizar */}
         <TouchableOpacity
           style={[styles.updateBtn, saving && styles.btnDisabled]}
           onPress={handleUpdate}
@@ -209,16 +171,11 @@ const PerfilScreen = () => {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* AppBar inferior */}
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Configuracion')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Configuracion', { pacienteId, nombrePaciente })}>
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Home', { pacienteId })
-          }
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}>
           <Icon name="home-outline" size={24} color="#616161" />
         </TouchableOpacity>
         <TouchableOpacity>

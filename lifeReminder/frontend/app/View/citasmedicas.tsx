@@ -1,10 +1,27 @@
-// AgendaCitaScreen.tsx
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const AgendaCitaScreen = () => {
   const navigation = useNavigation();
+  const { params } = useRoute<any>();
+  const { pacienteId, nombrePaciente } = params || {};
+
+  const irAServicios = () => {
+    if (!pacienteId || !nombrePaciente) {
+      Alert.alert('Error', 'Datos del paciente no disponibles');
+      return;
+    }
+    navigation.navigate('Servicios', { pacienteId, nombrePaciente });
+  };
+
+  const irACitasAgendadas = () => {
+    if (!pacienteId || !nombrePaciente) {
+      Alert.alert('Error', 'Datos del paciente no disponibles');
+      return;
+    }
+    navigation.navigate('CitasAgendadas', { pacienteId, nombrePaciente });
+  };
 
   return (
     <View style={styles.container}>
@@ -13,14 +30,14 @@ const AgendaCitaScreen = () => {
 
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#0277BD' }]}
-        onPress={() => navigation.navigate('Servicios')}
+        onPress={irAServicios}
       >
         <Text style={styles.buttonText}>Ingresar a Servicios</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#039BE5' }]}
-        onPress={() => navigation.navigate('CitasAgendadas')}
+        onPress={irACitasAgendadas}
       >
         <Text style={styles.buttonText}>Ver Citas Agendadas</Text>
       </TouchableOpacity>

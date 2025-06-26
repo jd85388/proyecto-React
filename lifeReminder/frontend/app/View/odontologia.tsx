@@ -1,4 +1,4 @@
-// medicinaGeneral.tsx
+// odontologia.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -12,7 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-const MedicinaGeneralScreen = () => {
+const OdontologiaScreen = () => {
   const navigation = useNavigation();
   const { params } = useRoute<any>();
   const {
@@ -83,7 +83,7 @@ const MedicinaGeneralScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Medicina General</Text>
+      <Text style={styles.title}>Odontología</Text>
 
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Paciente</Text>
@@ -292,4 +292,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MedicinaGeneralScreen;
+export default OdontologiaScreen;

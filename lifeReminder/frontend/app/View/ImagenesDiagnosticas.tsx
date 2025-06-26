@@ -6,7 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Linking
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -28,8 +29,9 @@ const ImagenesDiagnosticasScreen = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!pacienteId) return;
     fetch(`https://api.tudominio.com/pacientes/${pacienteId}/imagenes`)
-      .then(r => r.json())
+      .then(res => res.json())
       .then((data: ImagenDiagnostica[]) => setImagenes(data))
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -52,22 +54,16 @@ const ImagenesDiagnosticasScreen = () => {
               <View style={styles.cardButtons}>
                 <TouchableOpacity
                   style={styles.cardBtn}
-                  onPress={() => {
-                    // descarga directa
-                    fetch(img.urlDescarga);
-                  }}
+                  onPress={() => Linking.openURL(img.urlDescarga)}
                 >
                   <Text style={styles.cardBtnText}>Descargar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.cardBtn}
-                  onPress={() => {
-                    // abre visor de imágenes
-                    navigation.navigate('VisorImagenes', {
-                      url: img.urlVisor
-                    });
-                  }}
+                  onPress={() =>
+                    navigation.navigate('VisorImagenes', { url: img.urlVisor })
+                  }
                 >
                   <Text style={styles.cardBtnText}>Ver Imágenes</Text>
                 </TouchableOpacity>
@@ -79,7 +75,7 @@ const ImagenesDiagnosticasScreen = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}
       >
         <Text style={styles.backButtonText}>Volver</Text>
       </TouchableOpacity>
@@ -88,14 +84,10 @@ const ImagenesDiagnosticasScreen = () => {
         <TouchableOpacity onPress={() => navigation.navigate('Configuracion')}>
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Home', { pacienteId, nombrePaciente })
-          }
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}>
           <Icon name="home-outline" size={24} color="#039BE5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil', { pacienteId })}>
           <Icon name="account-outline" size={24} color="#616161" />
         </TouchableOpacity>
       </View>
