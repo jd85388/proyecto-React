@@ -9,7 +9,7 @@ export default function home() {
     return (
 
         <ImageBackground
-        source={require('../(tabs)/assets/fondo2.png')}
+        source={require('.. /(tabs)/assets/fondo2.png')}
         style={estilos.imagen2}>
         <View style={estilos.contenedor}>
             <View style={estilos.parteSuperior}>

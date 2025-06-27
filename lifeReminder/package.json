@@ -7,7 +7,8 @@
     "android": "cd frontend && expo start --android",
     "ios": "cd frontend && expo start --ios",
     "web": "cd frontend && expo start --web",
-    "all": "concurrently \"npm run start\" \"npm run dev\""
+    "all": "concurrently \"npm run start\" \"npm run dev\"",
+    "app" : "npx expo start"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"

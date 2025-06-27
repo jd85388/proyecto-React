@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 interface Medicamento {
   id: string;
   nombre: string;
   frecuenciaHoras: number;
 }
-
+const route = useRouter();
 const MedicamentosScreen = () => {
   const navigation = useNavigation();
   const { pacienteId, nombrePaciente } = useRoute<any>().params;
@@ -73,7 +74,7 @@ const MedicamentosScreen = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => route.push('View/login')}
       >
         <Text style={styles.backText}>Atrás</Text>
       </TouchableOpacity>
