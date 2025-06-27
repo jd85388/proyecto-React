@@ -2,7 +2,6 @@ import  { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } fro
 import { useRouter }from 'expo-router';
 import AnimacionYa from '../(tabs)/Components/AnimacionMovil';
 import AnimacionEfecto from '../(tabs)/Components/AnimacionElement';
-
 export default function home() {
     const router = useRouter();
 

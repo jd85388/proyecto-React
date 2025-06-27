@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert, Text, TextInput,StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TextInput,StyleSheet, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import {  useRouter } from 'expo-router';
 import AnimacionYa from '../../(tabs)/Components/AnimacionMovil';
 import AnimacionEfecto from '../../(tabs)/Components/AnimacionElement';
@@ -33,15 +33,6 @@ export default function Login() {
       await AsyncStorage.removeItem('correo');
       await AsyncStorage.removeItem('password');
     }
-    if (!correo || !password) {
-      Alert.alert("Campos incompletos, por favor completa todos los campos");
-      return;
-    }
-    const correoRegex = /^[a-zA-Z-0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!correoRegex.test(correo.trim())) {
-      Alert.alert("correo invalido", "Por favor ingresa un correo valido");
-      return;
-    }
 
     const response = await fetch('http://192.168.1.10:3000/api/login', {
       method: 'POST',
@@ -60,15 +51,13 @@ export default function Login() {
       router.push('/View/menu'); 
     } else {
       console.log('Error al iniciar sesión:', data.message);
-      Alert.alert("Error al iniciar sesion", data.message);
     }
   } catch (error) {
     console.error('Error de red o servidor:', error);
-    Alert.alert("Error de red", "No pudimos conectarnos con la app")
   }
 };
 
-//Desde esta parte inicia el diseño
+
   return (
     <ImageBackground
       source={require('../../(tabs)/assets/fondo2.png')}
@@ -77,11 +66,8 @@ export default function Login() {
 
     <View style={Estilos.contenedorPrincipal}>
       <Image 
-        source={require('../../(tabs)/assets/Logo2.png')}
+        source={require('../../(tabs)/assets/logoIcon.png')}
         style={Estilos.imagen}/>
-        <AnimacionYa style={Estilos.titulo} duration={2000}>
-              LIFE REMINDER
-        </AnimacionYa>
 
       
       <View style={Estilos.contenedorSecundario}>
@@ -149,7 +135,7 @@ const Estilos = StyleSheet.create({
       backgroundColor: 'white',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: 30,
+      marginBottom: 20,
       borderRadius: 30,
     },
     input: {
@@ -160,15 +146,13 @@ const Estilos = StyleSheet.create({
       marginBottom: 15,
       borderColor: 'black',
       borderWidth: 1
-
-    
     },
     imagen:{
       resizeMode: 'stretch',
       borderRadius: 999,
-      marginBottom: 30,
-      width: 180,
-      height: 180
+      marginBottom: 5,
+      width: 470,
+      height: 330
     },
     texto: {
       fontSize: 23
@@ -199,14 +183,6 @@ const Estilos = StyleSheet.create({
       justifyContent: 'space-evenly',
       alignItems: 'center',
       flexDirection: 'row'
-    },
-    titulo: {
-      color: 'white',
-      fontSize: 35,
-      marginBottom: 30,
-      textShadowColor: 'black',
-      textShadowOffset: { width: 1, height: 4},
-      textShadowRadius: 1
     },
     recuperacion: {
       marginBottom: 14

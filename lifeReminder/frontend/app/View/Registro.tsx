@@ -1,12 +1,11 @@
 import React, { useState,  } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity,Platform, Alert  } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,Platform, Alert, ScrollView  } from "react-native";
 import FondoImagen from "../../(tabs)/Components/fondoPantalla";
 import ImagenCualquiera from "../../(tabs)/Components/imagenes";
 import AnimacionYa from '../../(tabs)/Components/AnimacionMovil';
-import MiBotonUtil from "../../(tabs)/Components/Botones";
 import { Picker } from "@react-native-picker/picker";
 import  DateTimePicker, { DateTimePickerEvent }  from "@react-native-community/datetimepicker";
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
 
 export default function registro() {
     const [nombre, setNombre] = useState('');
@@ -32,56 +31,66 @@ export default function registro() {
             setFechaNacimiento(selectedDate);
         }
     };
-    const validarDatos = async ()  => {
-        try {
-        if(!nombre || !apellido || !rh || !fechaNacimiento || !correo || !password) {
-            Alert.alert("Problemas para registrar", "Es necesario que complete todos los campos requeridos para poder registrarte con exito")
-            return;
-        }
-        if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)){
-            setMensaje("Correo Invalido");
-            return;
-        }else {
-            console.log("correo valido")
-        }
-        const response = await fetch('http://192.168.1.10:3000/api/registro', {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify({
-                nombre,
-                apellido,
-                rh,
-                fechaNacimiento,
-                correo,
-                password
-            })
-        });
-        const data = await response.json();
-        if (response.ok) {
-            Alert.alert("Bienvenido a Life Reminder", "Felicidades fuiste registrado con exito, es para nosotros un gusto darte la bienvenida a Life Reminder");
-            router.push('/View/login');
-        }else {
-            Alert.alert("Registro Fallido", `Lamentamos no poder registrarte te pedimos que revises la informacion ingresada. ${data.message}`);
-        }
-     } catch (e) {
-        console.error('Error de conexion', e);
-        Alert.alert('perdimos la conexion a internet, vuelve  intentar mas tarde')
-     }
-    };
+    const validarDatos = async () => {
+  // Validaciones básicas
+  if (!nombre || !apellido || !rh || !fechaNacimiento || !correo || !password) {
+    setMensaje('Falta llenar campos obligatorios');
+    return;
+  }
+
+  if (!/\S+@\S+\.\S+/.test(correo)) {
+    setMensaje("Correo inválido");
+    return;
+  }
+
+  try {
+    const response = await fetch('http://192.168.1.10:3000/api/registro', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nombre,
+        apellido,
+        rh,
+        fechaNacimiento,
+        correo,
+        password
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      Alert.alert(
+        "Bienvenido a Life Reminder",
+        "Felicidades por registrarte. Es para nosotros un gusto poder darte la bienvenida a nuestra app."
+      );
+      router.push('View/login');
+    } else {
+      Alert.alert(
+        "Lamentamos lo sucedido",
+        `No pudimos registrarte. Por favor, verifica los datos ingresados. Error: ${data.message || JSON.stringify(data)}`
+      );
+    }
+
+  } catch (error) {
+    console.error("Error en el registro:", error);
+    Alert.alert("Error", "Hubo un problema al registrar. Intenta de nuevo más tarde.");
+  }
+};
 
     //Desde esta parte inicia el diseño
      return (
        <FondoImagen source={require('../../(tabs)/assets/fondo2.png')}>
         <View style={estilo.principal}>
 
-            <ImagenCualquiera source={require('../../(tabs)/assets/Logo2.png')}></ImagenCualquiera>
-            <AnimacionYa style={estilo.titulo} duration={2000}>REGISTRO</AnimacionYa>
+            <ImagenCualquiera source={require('../../(tabs)/assets/logoIcon.png')}></ImagenCualquiera>
             <View style={estilo.contenedorRegistro}>
-
+                <View style={estilo.Titulotitulo}>
+               <AnimacionYa style={estilo.titulo} duration={2000}>REGISTRO</AnimacionYa>
+                </View>
                 <View style={estilo.campo} >
-    
                     <TextInput style={estilo.input} 
                     placeholder="Nombre" value={nombre} 
                     onChangeText={(texto) => {const soloLetras = texto.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
@@ -134,13 +143,15 @@ export default function registro() {
                         setCorreo(filtroSeguridad)
                     }}/>
                     <TextInput style={estilo.input} placeholder="Contraseña" value={password} onChangeText={(texto) => setPassword(texto)} secureTextEntry/>
-                </View>
 
+                </View>
+                
             </View>
-            <TouchableOpacity style={estilo.registro} onPress={(validarDatos)}>
-                    <Text style={estilo.cuentas}>REGISTRARME</Text>
+
+            <TouchableOpacity style={estilo.inicio}> 
+                <Text style={estilo.cuenta}>REGISTRARME</Text>
             </TouchableOpacity>
-    
+            
         </View>
        </FondoImagen>
      )}
@@ -189,7 +200,7 @@ export default function registro() {
         textShadowColor: 'black',
         textShadowOffset: { width: 1, height: 4},
         textShadowRadius: 1,
-        paddingBottom: 5
+        paddingBottom: 1
         },
         fecha: {
             borderRadius: 10,
@@ -209,8 +220,8 @@ export default function registro() {
         textoFecha: {
             fontSize: 17
         },
-        registro: {
-            backgroundColor: '#1E90FF',
+        inicio: {
+             backgroundColor: '#1E90FF',
             width: 360,
             height: 50,
             marginBlock: 30,
@@ -218,9 +229,12 @@ export default function registro() {
             justifyContent: 'center',
             borderRadius: 14,
         },
-        cuentas: {
+        cuenta: {
             color: 'white',
             fontSize: 16
+        },
+        Titulotitulo: {
+            alignContent: 'center'
         }
       
     })

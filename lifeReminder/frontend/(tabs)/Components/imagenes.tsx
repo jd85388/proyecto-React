@@ -10,21 +10,20 @@ type Props = {
 
 export default function ImagenCualquiera({
     source,
-    width = 180,
-    height = 180,
-    borderRadius = 999,
+    width = 410,
+    height = 280,
 }: Props) {
     return (
         <Image
         source={source}
-        style={[estilos.imagen, { width, height, borderRadius}]}
+        style={[estilos.imagen, { width, height}]}
         resizeMode="stretch"
         />
     );
 }
 const estilos = StyleSheet.create({
     imagen: {
-      marginBottom: 25,
+      marginBottom: 1,
       justifyContent: 'center'
     },
 });
