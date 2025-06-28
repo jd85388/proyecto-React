@@ -9,7 +9,6 @@ import {
   Alert,
   ActivityIndicator
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
@@ -19,7 +18,6 @@ const PerfilScreen = () => {
   const { pacienteId = '', nombrePaciente = '' } = useLocalSearchParams();
 
   const [perfil, setPerfil] = useState({
-    id: '',
     nombreCompleto: '',
     tipoDocumento: '',
     numeroDocumento: '',
@@ -34,17 +32,14 @@ const PerfilScreen = () => {
     fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/perfil`)
       .then(res => res.json())
       .then(data => setPerfil(data))
-      .catch(err => {
-        console.error(err);
-        Alert.alert('Error', 'No se pudo cargar tu información');
-      })
+      .catch(() => Alert.alert('Error', 'No se pudo cargar tu información'))
       .finally(() => setLoading(false));
   }, [pacienteId]);
 
   const handleUpdate = async () => {
-    const { nombreCompleto, tipoDocumento, numeroDocumento, telefono, correo } = perfil;
+    const { telefono, correo } = perfil;
 
-    if (!nombreCompleto || !tipoDocumento || !numeroDocumento || !telefono || !correo) {
+    if (!telefono || !correo) {
       return Alert.alert('Error', 'Todos los campos son obligatorios');
     }
     if (!/^\d+$/.test(telefono)) {
@@ -54,7 +49,7 @@ const PerfilScreen = () => {
       return Alert.alert('Error', 'El correo debe contener el símbolo "@"');
     }
     if (!politicaChecked) {
-      return Alert.alert('Error', 'Debes aceptar la política de privacidad para continuar');
+      return Alert.alert('Error', 'Debes aceptar la política de privacidad');
     }
 
     setSaving(true);
@@ -83,40 +78,23 @@ const PerfilScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerCircle}>
-        <Icon name="account-circle" size={80} color="#fff" />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Icon name="menu" size={28} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.name}>{perfil.nombreCompleto}</Text>
+        <Icon name="bell-outline" size={24} color="#fff" />
       </View>
-      <Text style={styles.title}>PERFIL</Text>
 
-      <ScrollView contentContainerStyle={styles.form}>
+      <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.label}>Nombre Completo</Text>
-        <TextInput
-          style={styles.input}
-          value={perfil.nombreCompleto}
-          onChangeText={text => setPerfil(prev => ({ ...prev, nombreCompleto: text }))}
-          placeholder="Tu nombre"
-        />
+        <Text style={styles.staticText}>{perfil.nombreCompleto}</Text>
 
         <Text style={styles.label}>Tipo de Documento</Text>
-        <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={perfil.tipoDocumento}
-            onValueChange={value => setPerfil(prev => ({ ...prev, tipoDocumento: value }))}
-          >
-            <Picker.Item label="Selecciona…" value="" />
-            <Picker.Item label="Cédula de Ciudadanía" value="cc" />
-            <Picker.Item label="Tarjeta de Identidad" value="ti" />
-            <Picker.Item label="Cédula de Extranjería" value="ce" />
-          </Picker>
-        </View>
+        <Text style={styles.staticText}>{perfil.tipoDocumento}</Text>
 
         <Text style={styles.label}>Número de Documento</Text>
-        <TextInput
-          style={styles.input}
-          value={perfil.numeroDocumento}
-          onChangeText={text => setPerfil(prev => ({ ...prev, numeroDocumento: text }))}
-          placeholder="Número de tu documento"
-        />
+        <Text style={styles.staticText}>{perfil.numeroDocumento}</Text>
 
         <Text style={styles.label}>Número Telefónico</Text>
         <TextInput
@@ -124,7 +102,6 @@ const PerfilScreen = () => {
           value={perfil.telefono}
           onChangeText={text => setPerfil(prev => ({ ...prev, telefono: text }))}
           keyboardType="numeric"
-          placeholder="Solo dígitos"
         />
 
         <Text style={styles.label}>Correo Electrónico</Text>
@@ -134,7 +111,6 @@ const PerfilScreen = () => {
           onChangeText={text => setPerfil(prev => ({ ...prev, correo: text }))}
           keyboardType="email-address"
           autoCapitalize="none"
-          placeholder="usuario@ejemplo.com"
         />
 
         <View style={styles.checkboxContainer}>
@@ -142,22 +118,20 @@ const PerfilScreen = () => {
             <Ionicons
               name={politicaChecked ? 'checkbox' : 'square-outline'}
               size={24}
-              color="#00AEEF"
+              color="#0277BD"
             />
           </TouchableOpacity>
           <Text style={styles.checkboxLabel}>
-            Acepto la política de tratamiento de datos personales
+            He leído y acepto política de tratamiento de datos personales y aviso de privacidad.
           </Text>
         </View>
 
         <TouchableOpacity
-          style={[styles.updateBtn, saving && styles.btnDisabled]}
+          style={[styles.button, saving && styles.btnDisabled]}
           onPress={handleUpdate}
           disabled={saving}
         >
-          <Text style={styles.btnText}>
-            {saving ? 'Actualizando...' : 'Actualizar Información'}
-          </Text>
+          <Text style={styles.buttonText}>{saving ? 'Guardando...' : 'Actualizar Información'}</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -179,52 +153,44 @@ const PerfilScreen = () => {
 const styles = StyleSheet.create({
   loader: {
     flex: 1,
-    backgroundColor: '#E1F5FE',
     justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: '#E1F5FE'
   },
   container: {
     flex: 1,
-    backgroundColor: '#E1F5FE',
-    paddingTop: 40
+    backgroundColor: '#E1F5FE'
   },
-  headerCircle: {
-    backgroundColor: '#00AEEF',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    alignSelf: 'center',
+  header: {
+    backgroundColor: '#0288D1',
+    padding: 20,
+    paddingTop: 50,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 12
+    justifyContent: 'space-between'
   },
-  title: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: '#01579B',
-    fontWeight: 'bold',
-    marginBottom: 20
+  name: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold'
   },
-  form: {
-    paddingHorizontal: 24,
-    paddingBottom: 80
+  content: {
+    padding: 20,
+    paddingBottom: 100
   },
   label: {
     color: '#0277BD',
     marginBottom: 4
+  },
+  staticText: {
+    fontSize: 16,
+    marginBottom: 12,
+    color: '#000'
   },
   input: {
     borderWidth: 1,
     borderColor: '#0277BD',
     borderRadius: 6,
     padding: 10,
-    backgroundColor: '#fff',
-    marginBottom: 16
-  },
-  pickerWrapper: {
-    borderWidth: 1,
-    borderColor: '#0277BD',
-    borderRadius: 6,
     backgroundColor: '#fff',
     marginBottom: 16
   },
@@ -238,8 +204,8 @@ const styles = StyleSheet.create({
     color: '#0277BD',
     flexShrink: 1
   },
-  updateBtn: {
-    backgroundColor: '#00AEEF',
+  button: {
+    backgroundColor: '#0277BD',
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center'
@@ -247,10 +213,9 @@ const styles = StyleSheet.create({
   btnDisabled: {
     backgroundColor: '#B3E5FC'
   },
-  btnText: {
+  buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16
+    fontWeight: 'bold'
   },
   appBar: {
     position: 'absolute',

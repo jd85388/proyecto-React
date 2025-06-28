@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -15,58 +16,69 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Iconos arriba */}
+      <View style={styles.topBar}>
+        <TouchableOpacity onPress={() => irA('Perfil')}>
+          <Ionicons name="person-circle-outline" size={30} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={26} color="white" />
+        </TouchableOpacity>
+      </View>
+
+      {/* Bienvenida */}
       <Text style={styles.titulo}>Bienvenido {nombrePaciente}!</Text>
       <Text style={styles.subtitulo}>¿En qué te puedo ayudar hoy?</Text>
 
-      <TouchableOpacity
-        style={[styles.card, { backgroundColor: '#B2DFDB' }]}
-        onPress={() => irA('Medicamentos')}>
-        <Text style={styles.cardTitulo}>Medicamentos</Text>
-        <Text style={styles.cardTexto}>
-          Recuerda tomarlos a tiempo para cuidar tu salud.
-        </Text>
-      </TouchableOpacity>
+      {/* Tarjetas en cuadrícula */}
+      <View style={styles.grid}>
+        <TouchableOpacity
+          style={[styles.card, { backgroundColor: '#B2EBF2' }]}
+          onPress={() => irA('Medicamentos')}>
+          <Text style={styles.cardTitulo}>Medicamentos</Text>
+          <Text style={styles.cardTexto}>Recuerda, es importante tomarlos a tiempo para cuidar tu salud.</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.card, { backgroundColor: '#FFCC80' }]}
-        onPress={() => irA('CitasMedicas')}>
-        <Text style={styles.cardTitulo}>Citas médicas</Text>
-        <Text style={styles.cardTexto}>
-          Tu salud es prioridad, no faltes a tu cita.
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.card, { backgroundColor: '#FFCDD2' }]}
+          onPress={() => irA('CitasMedicas')}>
+          <Text style={styles.cardTitulo}>Citas médicas</Text>
+          <Text style={styles.cardTexto}>Tu salud es prioridad, no faltes a tu cita</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.card, { backgroundColor: '#90CAF9' }]}
-        onPress={() => irA('HistoriaClinica')}>
-        <Text style={styles.cardTitulo}>Historia clínica</Text>
-        <Text style={styles.cardTexto}>
-          Tu historia clínica es clave para atención adecuada.
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.card, { backgroundColor: '#FFFFFF' }]}
+          onPress={() => irA('HistoriaClinica')}>
+          <Text style={styles.cardTitulo}>Historia clínica</Text>
+          <Text style={styles.cardTexto}>Tu historia clínica es clave para recibir la atención adecuada</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.card, { backgroundColor: '#F48FB1' }]}
-        onPress={() => irA('ImagenesDiagnosticas')}>
-        <Text style={styles.cardTitulo}>Imágenes Diagnósticas</Text>
-        <Text style={styles.cardTexto}>No dejes pasar tus exámenes.</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.card, { backgroundColor: '#DCEDC8' }]}
+          onPress={() => irA('ImagenesDiagnosticas')}>
+          <Text style={styles.cardTitulo}>Imágenes Diagnósticas</Text>
+          <Text style={styles.cardTexto}>No dejes pasar tus exámenes, pueden marcar la diferencia en tu tratamiento.</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity
-        style={[styles.logoutBtn, { backgroundColor: '#E57373' }]}
-        onPress={() => router.replace('/login')}>
+      {/* Botón cerrar sesión */}
+      <TouchableOpacity style={styles.logoutBtn} onPress={() => router.replace('/login')}>
         <Text style={styles.logoutText}>Cerrar Sesión</Text>
       </TouchableOpacity>
 
-      <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => irA('Configuracion')}>
-          <Text style={[styles.appBarItem, { color: '#00796B' }]}>Configuración</Text>
+      {/* Barra inferior */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => irA('Configuracion')}>
+          <Ionicons name="settings-outline" size={22} color="#333" />
+          <Text style={styles.navText}>Configuración</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => irA('Home')}>
-          <Text style={[styles.appBarItem, { color: '#1976D2' }]}>Inicio</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => irA('Home')}>
+          <Ionicons name="home" size={24} color="#333" />
+          <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => irA('Perfil')}>
-          <Text style={[styles.appBarItem, { color: '#C2185B' }]}>Perfil</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => irA('Perfil')}>
+          <FontAwesome5 name="user-circle" size={20} color="#333" />
+          <Text style={styles.navText}>Perfil</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -77,64 +89,81 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00AEEF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 60,
+    paddingHorizontal: 20,
     paddingBottom: 80,
+  },
+  topBar: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   titulo: {
     fontSize: 24,
-    color: '#FFFFFF',
     fontWeight: 'bold',
-    marginBottom: 8,
+    color: '#fff',
+    textAlign: 'left',
+    marginBottom: 4,
   },
   subtitulo: {
     fontSize: 16,
-    color: '#E0F7FA',
+    color: '#fff',
     marginBottom: 20,
+    textAlign: 'left',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   card: {
+    width: '48%',
+    padding: 10,
     borderRadius: 12,
-    padding: 15,
-    width: '85%',
-    marginVertical: 8,
-    alignItems: 'center',
+    marginBottom: 15,
   },
   cardTitulo: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#004D40',
+    color: '#000',
+    marginBottom: 4,
   },
   cardTexto: {
-    fontSize: 14,
-    color: '#004D40',
-    textAlign: 'center',
-    marginTop: 6,
+    fontSize: 13,
+    color: '#333',
   },
   logoutBtn: {
-    padding: 15,
-    borderRadius: 10,
     marginTop: 10,
-    width: '85%',
+    backgroundColor: 'red',
+    padding: 12,
+    borderRadius: 10,
     alignItems: 'center',
   },
   logoutText: {
-    color: '#FFFFFF',
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
   },
-  appBar: {
+  bottomNav: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: '#FFFFFF',
+    width: '100%',
+    backgroundColor: '#fff',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '100%',
-    paddingVertical: 12,
+    paddingVertical: 10,
+    borderTopColor: '#ccc',
     borderTopWidth: 1,
-    borderColor: '#BDBDBD',
   },
-  appBarItem: {
-    fontSize: 16,
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#333',
+    marginTop: 2,
   },
 });
 
