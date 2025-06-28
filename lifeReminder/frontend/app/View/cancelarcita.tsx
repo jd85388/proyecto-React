@@ -8,31 +8,37 @@ import {
   ActivityIndicator,
   ScrollView
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList, Cita } from '../View/types'; // Ajusta la ruta si es necesario
-
-type NavigationProp = StackNavigationProp<RootStackParamList, 'CancelarCita'>;
-type RouteParams = RouteProp<RootStackParamList, 'CancelarCita'>;
 
 const CancelarCitaScreen = () => {
-  const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteParams>();
-  const { cita, nombrePaciente } = route.params;
+  const router = useRouter();
+  const {
+    nombrePaciente = '',
+    id = '',
+    tipo = '',
+    lugar = '',
+    consultorio = '',
+    fechaHora = '',
+    valor = ''
+  } = useLocalSearchParams();
+
   const [loading, setLoading] = useState(false);
 
   const cancelarCita = async () => {
     setLoading(true);
     try {
-      await fetch(`https://api.ejemplo.com/citas/${cita.id}`, {
+      await fetch(`https://api.ejemplo.com/citas/${id}`, {
         method: 'DELETE'
       });
       Alert.alert('Éxito', 'Tu cita ha sido cancelada.', [
         {
           text: 'OK',
-          onPress: () => navigation.navigate('CitasAgendadas', { nombrePaciente })
+          onPress: () =>
+            router.push({
+              pathname: '/View/CitasAgendadas',
+              params: { nombrePaciente }
+            })
         }
       ]);
     } catch (error) {
@@ -59,23 +65,23 @@ const CancelarCitaScreen = () => {
       <View style={styles.card}>
         <View style={styles.row}>
           <Text style={styles.label}>Tipo de cita</Text>
-          <Text style={styles.value}>{cita.tipo}</Text>
+          <Text style={styles.value}>{tipo}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Lugar</Text>
-          <Text style={styles.value}>{cita.lugar}</Text>
+          <Text style={styles.value}>{lugar}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Consultorio</Text>
-          <Text style={styles.value}>{cita.consultorio}</Text>
+          <Text style={styles.value}>{consultorio}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Fecha y Hora</Text>
-          <Text style={styles.value}>{cita.fechaHora}</Text>
+          <Text style={styles.value}>{fechaHora}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Valor</Text>
-          <Text style={styles.value}>{cita.valor}</Text>
+          <Text style={styles.value}>{valor}</Text>
         </View>
       </View>
 
@@ -86,7 +92,10 @@ const CancelarCitaScreen = () => {
           <TouchableOpacity
             style={[styles.button, styles.backBtn]}
             onPress={() =>
-              navigation.navigate('CitasAgendadas', { nombrePaciente })
+              router.push({
+                pathname: '/View/CitasAgendadas',
+                params: { nombrePaciente }
+              })
             }
           >
             <Text style={styles.buttonText}>Atrás</Text>

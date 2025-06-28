@@ -8,15 +8,14 @@ import {
   ScrollView
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import CheckBox from '@react-native-community/checkbox';
 import {
   useNavigation,
   useRoute,
   RouteProp,
   NavigationProp
 } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
-// Tipos para navegación
 type RootStackParamList = {
   Home: { pacienteId: string; nombrePaciente: string };
   AgendaCita: { pacienteId: string; nombrePaciente: string };
@@ -179,11 +178,13 @@ const OdontologiaScreen = () => {
       </View>
 
       <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={politicaChecked}
-          onValueChange={setPoliticaChecked}
-          tintColors={{ true: '#0277BD', false: '#999' }}
-        />
+        <TouchableOpacity onPress={() => setPoliticaChecked(!politicaChecked)}>
+          <Ionicons
+            name={politicaChecked ? 'checkbox' : 'square-outline'}
+            size={24}
+            color="#0277BD"
+          />
+        </TouchableOpacity>
         <Text style={styles.checkboxLabel}>He leído la política de privacidad</Text>
       </View>
 
@@ -198,11 +199,7 @@ const OdontologiaScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.button,
-            styles.nextBtn,
-            !canProceed && styles.buttonDisabled
-          ]}
+          style={[styles.button, styles.nextBtn, !canProceed && styles.buttonDisabled]}
           disabled={!canProceed}
           onPress={() =>
             navigation.navigate('Home', { pacienteId, nombrePaciente })

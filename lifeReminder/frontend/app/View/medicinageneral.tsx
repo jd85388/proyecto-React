@@ -8,8 +8,8 @@ import {
   ScrollView
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import CheckBox from '@react-native-community/checkbox';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; // Para el ícono de checkbox
 
 const MedicinaGeneralScreen = () => {
   const navigation = useNavigation<any>();
@@ -115,11 +115,7 @@ const MedicinaGeneralScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Centro Médico</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={centroId}
-            onValueChange={setCentroId}
-            mode="dropdown"
-          >
+          <Picker selectedValue={centroId} onValueChange={setCentroId} mode="dropdown">
             <Picker.Item label="Selecciona centro…" value="" />
             {centros.map(c => (
               <Picker.Item key={c.id} label={c.nombre} value={c.id} />
@@ -131,12 +127,7 @@ const MedicinaGeneralScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Fecha Disponible</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={fecha}
-            enabled={!!centroId}
-            onValueChange={setFecha}
-            mode="dropdown"
-          >
+          <Picker selectedValue={fecha} enabled={!!centroId} onValueChange={setFecha} mode="dropdown">
             <Picker.Item label="Selecciona fecha…" value="" />
             {fechas.map(f => (
               <Picker.Item key={f} label={f} value={f} />
@@ -148,12 +139,7 @@ const MedicinaGeneralScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Hora Disponible</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={hora}
-            enabled={!!fecha}
-            onValueChange={setHora}
-            mode="dropdown"
-          >
+          <Picker selectedValue={hora} enabled={!!fecha} onValueChange={setHora} mode="dropdown">
             <Picker.Item label="Selecciona hora…" value="" />
             {horas.map(h => (
               <Picker.Item key={h} label={h} value={h} />
@@ -165,12 +151,7 @@ const MedicinaGeneralScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Especialista</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={especialista}
-            enabled={!!hora}
-            onValueChange={setEspecialista}
-            mode="dropdown"
-          >
+          <Picker selectedValue={especialista} enabled={!!hora} onValueChange={setEspecialista} mode="dropdown">
             <Picker.Item label="Selecciona especialista…" value="" />
             {especialistas.map(e => (
               <Picker.Item key={e.id} label={e.nombre} value={e.id} />
@@ -180,11 +161,13 @@ const MedicinaGeneralScreen = () => {
       </View>
 
       <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={politicaChecked}
-          onValueChange={setPoliticaChecked}
-          tintColors={{ true: '#0277BD', false: '#999' }}
-        />
+        <TouchableOpacity onPress={() => setPoliticaChecked(!politicaChecked)}>
+          <Ionicons
+            name={politicaChecked ? 'checkbox' : 'square-outline'}
+            size={24}
+            color="#0277BD"
+          />
+        </TouchableOpacity>
         <Text style={styles.checkboxLabel}>
           He leído la política de privacidad
         </Text>
@@ -201,11 +184,7 @@ const MedicinaGeneralScreen = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[
-            styles.button,
-            styles.nextBtn,
-            !canProceed && styles.buttonDisabled
-          ]}
+          style={[styles.button, styles.nextBtn, !canProceed && styles.buttonDisabled]}
           disabled={!canProceed}
           onPress={() =>
             navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)

@@ -10,7 +10,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import CheckBox from '@react-native-community/checkbox';
+import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
@@ -138,11 +138,13 @@ const PerfilScreen = () => {
         />
 
         <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={politicaChecked}
-            onValueChange={setPoliticaChecked}
-            tintColors={{ true: '#00AEEF', false: '#999' }}
-          />
+          <TouchableOpacity onPress={() => setPoliticaChecked(!politicaChecked)}>
+            <Ionicons
+              name={politicaChecked ? 'checkbox' : 'square-outline'}
+              size={24}
+              color="#00AEEF"
+            />
+          </TouchableOpacity>
           <Text style={styles.checkboxLabel}>
             Acepto la política de tratamiento de datos personales
           </Text>
