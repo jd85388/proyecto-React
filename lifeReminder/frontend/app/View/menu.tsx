@@ -1,13 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
-const HomeScreen = ({ route }: any) => {
-  const navigation = useNavigation<any>();
-  const { pacienteId, nombrePaciente } = route.params;
+const HomeScreen = () => {
+  const router = useRouter();
+  const { pacienteId, nombrePaciente } = useLocalSearchParams();
 
   const irA = (ruta: string) => {
-    navigation.navigate(ruta, { pacienteId, nombrePaciente });
+    router.push({
+      pathname: `/${ruta}`,
+      params: { pacienteId, nombrePaciente },
+    });
   };
 
   return (
@@ -51,7 +54,7 @@ const HomeScreen = ({ route }: any) => {
 
       <TouchableOpacity
         style={[styles.logoutBtn, { backgroundColor: '#E57373' }]}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => router.replace('/login')}>
         <Text style={styles.logoutText}>Cerrar Sesión</Text>
       </TouchableOpacity>
 
