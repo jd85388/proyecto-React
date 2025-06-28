@@ -172,10 +172,12 @@ const PerfilScreen = () => {
       </ScrollView>
 
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Configuracion', { pacienteId, nombrePaciente })}>
+        //queda inactivo por un momento
+        <TouchableOpacity onPress={() => (navigation as any ).navigate('Configuracion', { pacienteId, nombrePaciente })}>
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}>
+        //queda inactivo por momento
+        <TouchableOpacity onPress={() =>( navigation as any).navigate('Home', { pacienteId, nombrePaciente })}>
           <Icon name="home-outline" size={24} color="#616161" />
         </TouchableOpacity>
         <TouchableOpacity>
