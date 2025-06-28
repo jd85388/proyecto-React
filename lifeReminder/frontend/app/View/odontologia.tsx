@@ -16,13 +16,13 @@ import {
   NavigationProp
 } from '@react-navigation/native';
 
-// Tipos para navegación y ruta
+// Tipos para navegación
 type RootStackParamList = {
   Home: { pacienteId: string; nombrePaciente: string };
   AgendaCita: { pacienteId: string; nombrePaciente: string };
 };
 
-type RouteParams = {
+type OdontoParams = {
   pacienteId: string;
   nombrePaciente: string;
   telefonoPaciente: string;
@@ -31,13 +31,13 @@ type RouteParams = {
 
 const OdontologiaScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const route = useRoute<RouteProp<Record<string, RouteParams>, string>>();
+  const route = useRoute<RouteProp<Record<string, OdontoParams>, string>>();
   const {
     nombrePaciente = '',
     telefonoPaciente = '',
     emailPaciente = '',
     pacienteId = ''
-  } = route.params || {};
+  } = route.params || ({} as OdontoParams);
 
   const [telefono, setTelefono] = useState(telefonoPaciente);
   const [email, setEmail] = useState(emailPaciente);
@@ -133,11 +133,7 @@ const OdontologiaScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Centro Médico</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={centroId}
-            onValueChange={setCentroId}
-            mode="dropdown"
-          >
+          <Picker selectedValue={centroId} onValueChange={setCentroId}>
             <Picker.Item label="Selecciona centro…" value="" />
             {centros.map(c => (
               <Picker.Item key={c.id} label={c.nombre} value={c.id} />
@@ -149,12 +145,7 @@ const OdontologiaScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Fecha Disponible</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={fecha}
-            enabled={!!centroId}
-            onValueChange={setFecha}
-            mode="dropdown"
-          >
+          <Picker selectedValue={fecha} enabled={!!centroId} onValueChange={setFecha}>
             <Picker.Item label="Selecciona fecha…" value="" />
             {fechas.map(f => (
               <Picker.Item key={f} label={f} value={f} />
@@ -166,12 +157,7 @@ const OdontologiaScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Hora Disponible</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={hora}
-            enabled={!!fecha}
-            onValueChange={setHora}
-            mode="dropdown"
-          >
+          <Picker selectedValue={hora} enabled={!!fecha} onValueChange={setHora}>
             <Picker.Item label="Selecciona hora…" value="" />
             {horas.map(h => (
               <Picker.Item key={h} label={h} value={h} />
@@ -183,12 +169,7 @@ const OdontologiaScreen = () => {
       <View style={styles.fieldGroup}>
         <Text style={styles.label}>Especialista</Text>
         <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={especialista}
-            enabled={!!hora}
-            onValueChange={setEspecialista}
-            mode="dropdown"
-          >
+          <Picker selectedValue={especialista} enabled={!!hora} onValueChange={setEspecialista}>
             <Picker.Item label="Selecciona especialista…" value="" />
             {especialistas.map(e => (
               <Picker.Item key={e.id} label={e.nombre} value={e.id} />
@@ -203,9 +184,7 @@ const OdontologiaScreen = () => {
           onValueChange={setPoliticaChecked}
           tintColors={{ true: '#0277BD', false: '#999' }}
         />
-        <Text style={styles.checkboxLabel}>
-          He leído la política de privacidad
-        </Text>
+        <Text style={styles.checkboxLabel}>He leído la política de privacidad</Text>
       </View>
 
       <View style={styles.buttonsRow}>

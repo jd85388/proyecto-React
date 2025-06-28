@@ -1,4 +1,4 @@
-// Medicamentos.tsx
+// medicamentos.tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -9,18 +9,17 @@ import {
   ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 interface Medicamento {
   id: string;
   nombre: string;
   frecuenciaHoras: number;
 }
-const route = useRouter();
+
 const MedicamentosScreen = () => {
-  const navigation = useNavigation();
-  const { pacienteId, nombrePaciente } = useRoute<any>().params;
+  const route = useRouter();
+  const { pacienteId, nombrePaciente } = useLocalSearchParams();
 
   const [medicamentos, setMedicamentos] = useState<Medicamento[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -70,11 +69,9 @@ const MedicamentosScreen = () => {
         />
       )}
 
-      {/* Si no hay medicamentos, la pantalla queda en blanco debajo del título */}
-
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => route.push('View/login')}
+        onPress={() => route.replace('/login')}
       >
         <Text style={styles.backText}>Atrás</Text>
       </TouchableOpacity>

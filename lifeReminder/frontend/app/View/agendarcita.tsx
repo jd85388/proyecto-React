@@ -2,29 +2,25 @@
 
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from './types';
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-type SeleccionarServicioRouteProp = RouteProp<RootStackParamList, 'SeleccionarServicio'>;
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const SeleccionarServicio = () => {
-  const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<SeleccionarServicioRouteProp>();
-
-  const { pacienteId, nombrePaciente, telefonoPaciente, emailPaciente } = route.params;
+  const router = useRouter();
+  const {
+    pacienteId = '',
+    nombrePaciente = '',
+    telefonoPaciente = '',
+    emailPaciente = ''
+  } = useLocalSearchParams();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#4DB6AC' }]}
         onPress={() =>
-          navigation.navigate('MedicinaGeneral', {
-            pacienteId,
-            nombrePaciente,
-            telefonoPaciente,
-            emailPaciente
+          router.push({
+            pathname: '/View/MedicinaGeneral',
+            params: { pacienteId, nombrePaciente, telefonoPaciente, emailPaciente }
           })
         }
       >
@@ -34,11 +30,9 @@ const SeleccionarServicio = () => {
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#FF8A65' }]}
         onPress={() =>
-          navigation.navigate('Odontologia', {
-            pacienteId,
-            nombrePaciente,
-            telefonoPaciente,
-            emailPaciente
+          router.push({
+            pathname: '/View/Odontologia',
+            params: { pacienteId, nombrePaciente, telefonoPaciente, emailPaciente }
           })
         }
       >
@@ -48,7 +42,7 @@ const SeleccionarServicio = () => {
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#BA68C8' }]}
         onPress={() => {
-          // Aquí podrías implementar navegación a 'Especialidades' si deseas
+          // Aquí podrías implementar navegación a Especialidades
         }}
       >
         <Text style={styles.buttonText}>Especialidades</Text>

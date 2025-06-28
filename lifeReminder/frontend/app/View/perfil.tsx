@@ -1,5 +1,3 @@
-// C:\Users\USER\Documents\react\proyecto-React\lifeReminder\frontend\app\View\perfil.tsx
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -13,19 +11,12 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-// Tipado para los parámetros de navegación
-type RouteParams = {
-  pacienteId: string;
-  nombrePaciente: string;
-};
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const PerfilScreen = () => {
-  const navigation = useNavigation();
-  const route = useRoute<RouteProp<Record<string, RouteParams>, string>>();
-  const { pacienteId, nombrePaciente } = route.params;
+  const router = useRouter();
+  const { pacienteId = '', nombrePaciente = '' } = useLocalSearchParams();
 
   const [perfil, setPerfil] = useState({
     id: '',
@@ -169,10 +160,10 @@ const PerfilScreen = () => {
       </ScrollView>
 
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => (navigation as any).navigate('Configuracion', { pacienteId, nombrePaciente })}>
+        <TouchableOpacity onPress={() => router.push({ pathname: '/View/Configuracion', params: { pacienteId, nombrePaciente } })}>
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => (navigation as any).navigate('Home', { pacienteId, nombrePaciente })}>
+        <TouchableOpacity onPress={() => router.push({ pathname: '/View/Home', params: { pacienteId, nombrePaciente } })}>
           <Icon name="home-outline" size={24} color="#616161" />
         </TouchableOpacity>
         <TouchableOpacity>
