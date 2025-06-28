@@ -1,4 +1,3 @@
-// HistorialClinica.tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -20,13 +19,14 @@ interface Historia {
 }
 
 const HistorialClinicaScreen = () => {
-  const navigation = useNavigation();
-  const { pacienteId, nombrePaciente } = useRoute<any>().params || {};
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const { pacienteId, nombrePaciente } = route.params || {};
+
   const [historias, setHistorias] = useState<Historia[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Ajusta esta URL a tu endpoint real
     fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/historial`)
       .then(res => res.json())
       .then((data: Historia[]) => setHistorias(data))
@@ -70,9 +70,10 @@ const HistorialClinicaScreen = () => {
                 <TouchableOpacity
                   style={[styles.cardButton, styles.viewBtn]}
                   onPress={() =>
-                    navigation.navigate('VerHistoriaDetalle', {
-                      historiaId: item.id
-                    })
+                    navigation.navigate(
+                      'VerHistoriaDetalle' as never,
+                      { historiaId: item.id } as never
+                    )
                   }
                 >
                   <Text style={styles.cardButtonText}>Ver historia</Text>
@@ -85,7 +86,7 @@ const HistorialClinicaScreen = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Login' as never)}
       >
         <Text style={styles.backText}>Volver</Text>
       </TouchableOpacity>

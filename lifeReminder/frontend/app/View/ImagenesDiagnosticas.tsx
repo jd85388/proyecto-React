@@ -1,4 +1,3 @@
-// ImagenesDiagnosticas.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -22,8 +21,9 @@ interface ImagenDiagnostica {
 }
 
 const ImagenesDiagnosticasScreen = () => {
-  const navigation = useNavigation();
-  const { pacienteId, nombrePaciente } = useRoute<any>().params || {};
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const { pacienteId, nombrePaciente } = route.params || {};
 
   const [imagenes, setImagenes] = useState<ImagenDiagnostica[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ const ImagenesDiagnosticasScreen = () => {
                 <TouchableOpacity
                   style={styles.cardBtn}
                   onPress={() =>
-                    navigation.navigate('VisorImagenes', { url: img.urlVisor })
+                    navigation.navigate('VisorImagenes' as never, { url: img.urlVisor } as never)
                   }
                 >
                   <Text style={styles.cardBtnText}>Ver Imágenes</Text>
@@ -75,19 +75,33 @@ const ImagenesDiagnosticasScreen = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}
+        onPress={() =>
+          navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
+        }
       >
         <Text style={styles.backButtonText}>Volver</Text>
       </TouchableOpacity>
 
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Configuracion')}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Configuracion' as never, { pacienteId, nombrePaciente } as never)
+          }
+        >
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Home', { pacienteId, nombrePaciente })}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
+          }
+        >
           <Icon name="home-outline" size={24} color="#039BE5" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Perfil', { pacienteId })}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Perfil' as never, { pacienteId } as never)
+          }
+        >
           <Icon name="account-outline" size={24} color="#616161" />
         </TouchableOpacity>
       </View>

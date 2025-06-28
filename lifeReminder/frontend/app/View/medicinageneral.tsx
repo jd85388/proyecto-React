@@ -1,4 +1,3 @@
-// medicinaGeneral.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -13,14 +12,14 @@ import CheckBox from '@react-native-community/checkbox';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const MedicinaGeneralScreen = () => {
-  const navigation = useNavigation();
-  const { params } = useRoute<any>();
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
   const {
     nombrePaciente = '',
     telefonoPaciente = '',
     emailPaciente = '',
     pacienteId = ''
-  } = params || {};
+  } = route.params || {};
 
   const [telefono, setTelefono] = useState(telefonoPaciente);
   const [email, setEmail] = useState(emailPaciente);
@@ -195,7 +194,7 @@ const MedicinaGeneralScreen = () => {
         <TouchableOpacity
           style={[styles.button, styles.backBtn]}
           onPress={() =>
-            navigation.navigate('AgendaCita', { pacienteId, nombrePaciente })
+            navigation.navigate('AgendaCita' as never, { pacienteId, nombrePaciente } as never)
           }
         >
           <Text style={styles.buttonText}>Atrás</Text>
@@ -209,7 +208,7 @@ const MedicinaGeneralScreen = () => {
           ]}
           disabled={!canProceed}
           onPress={() =>
-            navigation.navigate('Home', { pacienteId, nombrePaciente })
+            navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
           }
         >
           <Text style={styles.buttonText}>Siguiente</Text>

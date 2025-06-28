@@ -1,13 +1,12 @@
-// C:\Users\USER\Documents\react\proyecto-React\lifeReminder\frontend\app\View\menu.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = ({ route }) => {
-  const navigation = useNavigation();
+const HomeScreen = ({ route }: any) => {
+  const navigation = useNavigation<any>();
   const { pacienteId, nombrePaciente } = route.params;
 
-  const irA = (ruta) => {
+  const irA = (ruta: string) => {
     navigation.navigate(ruta, { pacienteId, nombrePaciente });
   };
 
@@ -16,27 +15,43 @@ const HomeScreen = ({ route }) => {
       <Text style={styles.titulo}>Bienvenido {nombrePaciente}!</Text>
       <Text style={styles.subtitulo}>¿En qué te puedo ayudar hoy?</Text>
 
-      <TouchableOpacity style={[styles.card, { backgroundColor: '#B2DFDB' }]} onPress={() => irA('Medicamentos')}>
+      <TouchableOpacity
+        style={[styles.card, { backgroundColor: '#B2DFDB' }]}
+        onPress={() => irA('Medicamentos')}>
         <Text style={styles.cardTitulo}>Medicamentos</Text>
-        <Text style={styles.cardTexto}>Recuerda tomarlos a tiempo para cuidar tu salud.</Text>
+        <Text style={styles.cardTexto}>
+          Recuerda tomarlos a tiempo para cuidar tu salud.
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.card, { backgroundColor: '#FFCC80' }]} onPress={() => irA('CitasMedicas')}>
+      <TouchableOpacity
+        style={[styles.card, { backgroundColor: '#FFCC80' }]}
+        onPress={() => irA('CitasMedicas')}>
         <Text style={styles.cardTitulo}>Citas médicas</Text>
-        <Text style={styles.cardTexto}>Tu salud es prioridad, no faltes a tu cita.</Text>
+        <Text style={styles.cardTexto}>
+          Tu salud es prioridad, no faltes a tu cita.
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.card, { backgroundColor: '#90CAF9' }]} onPress={() => irA('HistoriaClinica')}>
+      <TouchableOpacity
+        style={[styles.card, { backgroundColor: '#90CAF9' }]}
+        onPress={() => irA('HistoriaClinica')}>
         <Text style={styles.cardTitulo}>Historia clínica</Text>
-        <Text style={styles.cardTexto}>Tu historia clínica es clave para atención adecuada.</Text>
+        <Text style={styles.cardTexto}>
+          Tu historia clínica es clave para atención adecuada.
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.card, { backgroundColor: '#F48FB1' }]} onPress={() => irA('ImagenesDiagnosticas')}>
+      <TouchableOpacity
+        style={[styles.card, { backgroundColor: '#F48FB1' }]}
+        onPress={() => irA('ImagenesDiagnosticas')}>
         <Text style={styles.cardTitulo}>Imágenes Diagnósticas</Text>
         <Text style={styles.cardTexto}>No dejes pasar tus exámenes.</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.logoutBtn, { backgroundColor: '#E57373' }]} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity
+        style={[styles.logoutBtn, { backgroundColor: '#E57373' }]}
+        onPress={() => navigation.navigate('Login')}>
         <Text style={styles.logoutText}>Cerrar Sesión</Text>
       </TouchableOpacity>
 

@@ -1,4 +1,3 @@
-// CancelarCita.tsx
 import React, { useState } from 'react';
 import {
   View,
@@ -11,20 +10,17 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList, Cita } from '../View/types'; // Ajusta la ruta si es necesario
 
-interface Cita {
-  id: string;
-  tipo: string;
-  lugar: string;
-  consultorio: string;
-  fechaHora: string;
-  valor: string;
-}
+type NavigationProp = StackNavigationProp<RootStackParamList, 'CancelarCita'>;
+type RouteParams = RouteProp<RootStackParamList, 'CancelarCita'>;
 
 const CancelarCitaScreen = () => {
-  const navigation = useNavigation();
-  const { cita, nombrePaciente }: { cita: Cita; nombrePaciente: string } =
-    useRoute<any>().params;
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteParams>();
+  const { cita, nombrePaciente } = route.params;
   const [loading, setLoading] = useState(false);
 
   const cancelarCita = async () => {
@@ -89,7 +85,9 @@ const CancelarCitaScreen = () => {
         <View style={styles.buttonsRow}>
           <TouchableOpacity
             style={[styles.button, styles.backBtn]}
-            onPress={() => navigation.navigate('CitasAgendadas', { nombrePaciente })}
+            onPress={() =>
+              navigation.navigate('CitasAgendadas', { nombrePaciente })
+            }
           >
             <Text style={styles.buttonText}>Atrás</Text>
           </TouchableOpacity>

@@ -1,4 +1,5 @@
 // C:\Users\USER\Documents\react\proyecto-React\lifeReminder\frontend\app\View\perfil.tsx
+
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -12,24 +13,21 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-interface PerfilData {
-  id: string;
-  nombreCompleto: string;
-  tipoDocumento: string;
-  numeroDocumento: string;
-  telefono: string;
-  correo: string;
-}
+// Tipado para los parámetros de navegación
+type RouteParams = {
+  pacienteId: string;
+  nombrePaciente: string;
+};
 
 const PerfilScreen = () => {
   const navigation = useNavigation();
-  const route = useRoute();
+  const route = useRoute<RouteProp<Record<string, RouteParams>, string>>();
   const { pacienteId, nombrePaciente } = route.params;
 
-  const [perfil, setPerfil] = useState<PerfilData>({
+  const [perfil, setPerfil] = useState({
     id: '',
     nombreCompleto: '',
     tipoDocumento: '',
@@ -42,10 +40,9 @@ const PerfilScreen = () => {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    // Reemplaza esta URL por tu API real
     fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/perfil`)
       .then(res => res.json())
-      .then((data: PerfilData) => setPerfil(data))
+      .then(data => setPerfil(data))
       .catch(err => {
         console.error(err);
         Alert.alert('Error', 'No se pudo cargar tu información');
@@ -172,12 +169,10 @@ const PerfilScreen = () => {
       </ScrollView>
 
       <View style={styles.appBar}>
-        //queda inactivo por un momento
-        <TouchableOpacity onPress={() => (navigation as any ).navigate('Configuracion', { pacienteId, nombrePaciente })}>
+        <TouchableOpacity onPress={() => (navigation as any).navigate('Configuracion', { pacienteId, nombrePaciente })}>
           <Icon name="cog-outline" size={24} color="#616161" />
         </TouchableOpacity>
-        //queda inactivo por momento
-        <TouchableOpacity onPress={() =>( navigation as any).navigate('Home', { pacienteId, nombrePaciente })}>
+        <TouchableOpacity onPress={() => (navigation as any).navigate('Home', { pacienteId, nombrePaciente })}>
           <Icon name="home-outline" size={24} color="#616161" />
         </TouchableOpacity>
         <TouchableOpacity>

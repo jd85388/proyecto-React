@@ -1,33 +1,55 @@
-// ServiciosScreen.tsx
+// frontend/app/View/SeleccionarServicio.tsx
+
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './types';
 
-const ServiciosScreen = () => {
-  const navigation = useNavigation();
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type SeleccionarServicioRouteProp = RouteProp<RootStackParamList, 'SeleccionarServicio'>;
+
+const SeleccionarServicio = () => {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<SeleccionarServicioRouteProp>();
+
+  const { pacienteId, nombrePaciente, telefonoPaciente, emailPaciente } = route.params;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Servicios Disponibles</Text>
-      <Text style={styles.subtitulo}>Selecciona el área que requieres</Text>
-
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#4DB6AC' }]}
-        onPress={() => navigation.navigate('MedicinaGeneral')}
+        onPress={() =>
+          navigation.navigate('MedicinaGeneral', {
+            pacienteId,
+            nombrePaciente,
+            telefonoPaciente,
+            emailPaciente
+          })
+        }
       >
         <Text style={styles.buttonText}>Medicina General</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#FF8A65' }]}
-        onPress={() => navigation.navigate('OdontologiaGeneral')}
+        onPress={() =>
+          navigation.navigate('Odontologia', {
+            pacienteId,
+            nombrePaciente,
+            telefonoPaciente,
+            emailPaciente
+          })
+        }
       >
         <Text style={styles.buttonText}>Odontología General</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#BA68C8' }]}
-        onPress={() => navigation.navigate('Especialidades')}
+        onPress={() => {
+          // Aquí podrías implementar navegación a 'Especialidades' si deseas
+        }}
       >
         <Text style={styles.buttonText}>Especialidades</Text>
       </TouchableOpacity>
@@ -38,34 +60,23 @@ const ServiciosScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EDE7F6',
-    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  titulo: {
-    fontSize: 22,
-    color: '#512DA8',
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitulo: {
-    fontSize: 16,
-    color: '#673AB7',
-    marginBottom: 20,
+    padding: 20,
+    backgroundColor: '#E0F7FA'
   },
   button: {
-    width: '80%',
-    paddingVertical: 15,
+    padding: 16,
+    marginVertical: 8,
     borderRadius: 8,
-    marginVertical: 10,
     alignItems: 'center',
+    width: '100%'
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#FFFFFF',
     fontWeight: 'bold',
-  },
+    fontSize: 16
+  }
 });
 
-export default ServiciosScreen;
+export default SeleccionarServicio;

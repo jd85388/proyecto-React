@@ -1,4 +1,3 @@
-// CitasAgendadas.tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -9,29 +8,29 @@ import {
   ActivityIndicator,
   Alert
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList, Cita } from '../View/types'; // ← Importamos el tipo Cita desde types.ts
 
-interface Cita {
-  id: string;
-  centro: string;
-  consultorio: string;
-  fechaHora: string;
-  valor: string;
-}
+// Tipos para navegación y ruta
+type NavigationProp = StackNavigationProp<RootStackParamList, 'CitasAgendadas'>;
+type RouteProps = RouteProp<RootStackParamList, 'CitasAgendadas'>;
 
 const CitasAgendadasScreen = () => {
-  const navigation = useNavigation();
-  const { nombrePaciente = '' } = useRoute<any>().params || {};
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProps>();
+  const { nombrePaciente = '', pacienteId = '' } = route.params || {};
+
   const [citas, setCitas] = useState<Cita[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://api.ejemplo.com/usuario/citas')
+    fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/citas`)
       .then(res => res.json())
       .then((data: Cita[]) => setCitas(data))
-      .catch(err => Alert.alert('Error', 'No se pudo cargar las citas'))
+      .catch(() => Alert.alert('Error', 'No se pudo cargar las citas'))
       .finally(() => setLoading(false));
-  }, []);
+  }, [pacienteId]);
 
   const confirmCita = async (citaId: string) => {
     try {
@@ -39,7 +38,7 @@ const CitasAgendadasScreen = () => {
         method: 'POST'
       });
       Alert.alert('¡Listo!', 'Tu cita ha sido confirmada.');
-      navigation.navigate('Login');
+      navigation.navigate('AgendaCita', { pacienteId, nombrePaciente });
     } catch {
       Alert.alert('Error', 'No se pudo confirmar la cita.');
     }
@@ -89,7 +88,10 @@ const CitasAgendadasScreen = () => {
             <TouchableOpacity
               style={styles.cancelBtn}
               onPress={() =>
-                navigation.navigate('CancelarCitas', { citaId: cita.id })
+                navigation.navigate('CancelarCita', {
+                  cita: cita, // ← se pasa el objeto completo
+                  nombrePaciente
+                })
               }
             >
               <Text style={styles.btnText}>Cancelar</Text>

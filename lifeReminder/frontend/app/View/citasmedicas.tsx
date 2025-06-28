@@ -3,16 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const AgendaCitaScreen = () => {
-  const navigation = useNavigation();
-  const { params } = useRoute<any>();
-  const { pacienteId, nombrePaciente } = params || {};
+  const navigation = useNavigation<any>();
+  const route = useRoute<any>();
+  const { pacienteId, nombrePaciente } = route.params || {};
 
   const irAServicios = () => {
     if (!pacienteId || !nombrePaciente) {
       Alert.alert('Error', 'Datos del paciente no disponibles');
       return;
     }
-    navigation.navigate('Servicios', { pacienteId, nombrePaciente });
+    navigation.navigate('Servicios' as never, { pacienteId, nombrePaciente } as never);
   };
 
   const irACitasAgendadas = () => {
@@ -20,7 +20,7 @@ const AgendaCitaScreen = () => {
       Alert.alert('Error', 'Datos del paciente no disponibles');
       return;
     }
-    navigation.navigate('CitasAgendadas', { pacienteId, nombrePaciente });
+    navigation.navigate('CitasAgendadas' as never, { pacienteId, nombrePaciente } as never);
   };
 
   return (

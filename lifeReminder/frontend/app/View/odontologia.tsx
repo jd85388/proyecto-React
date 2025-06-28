@@ -1,4 +1,3 @@
-// odontologia.tsx
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -10,17 +9,35 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  NavigationProp
+} from '@react-navigation/native';
+
+// Tipos para navegación y ruta
+type RootStackParamList = {
+  Home: { pacienteId: string; nombrePaciente: string };
+  AgendaCita: { pacienteId: string; nombrePaciente: string };
+};
+
+type RouteParams = {
+  pacienteId: string;
+  nombrePaciente: string;
+  telefonoPaciente: string;
+  emailPaciente: string;
+};
 
 const OdontologiaScreen = () => {
-  const navigation = useNavigation();
-  const { params } = useRoute<any>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<Record<string, RouteParams>, string>>();
   const {
     nombrePaciente = '',
     telefonoPaciente = '',
     emailPaciente = '',
     pacienteId = ''
-  } = params || {};
+  } = route.params || {};
 
   const [telefono, setTelefono] = useState(telefonoPaciente);
   const [email, setEmail] = useState(emailPaciente);
