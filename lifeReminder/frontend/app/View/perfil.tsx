@@ -78,6 +78,7 @@ const PerfilScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* AppBar superior */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Icon name="menu" size={28} color="#fff" />
@@ -131,19 +132,37 @@ const PerfilScreen = () => {
           onPress={handleUpdate}
           disabled={saving}
         >
-          <Text style={styles.buttonText}>{saving ? 'Guardando...' : 'Actualizar Información'}</Text>
+          <Text style={styles.buttonText}>
+            {saving ? 'Guardando...' : 'Actualizar Información'}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
 
+      {/* AppBar inferior */}
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={() => router.push({ pathname: '/View/Configuracion', params: { pacienteId, nombrePaciente } })}>
-          <Icon name="cog-outline" size={24} color="#616161" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push({ pathname: '/View/Home', params: { pacienteId, nombrePaciente } })}>
-          <Icon name="home-outline" size={24} color="#616161" />
-        </TouchableOpacity>
         <TouchableOpacity>
-          <Icon name="account-outline" size={24} color="#039BE5" />
+          <View style={{ alignItems: 'center' }}>
+            <Icon name="cog-outline" size={24} color="#616161" />
+            <Text style={{ fontSize: 12, color: '#616161' }}>Configuración</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() =>
+            router.push({ pathname: '/View/menu', params: { pacienteId, nombrePaciente } })
+          }
+        >
+          <View style={{ alignItems: 'center' }}>
+            <Icon name="home-outline" size={24} color="#039BE5" />
+            <Text style={{ fontSize: 12, color: '#039BE5' }}>Inicio</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <View style={{ alignItems: 'center' }}>
+            <Icon name="account-outline" size={24} color="#039BE5" />
+            <Text style={{ fontSize: 12, color: '#039BE5' }}>Perfil</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>

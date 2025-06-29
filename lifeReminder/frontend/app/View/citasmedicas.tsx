@@ -1,19 +1,21 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const AgendaCitaScreen = () => {
-  const navigation = useNavigation<any>();
-  const route = useRoute<any>();
-  const { pacienteId, nombrePaciente } = route.params || {};
+  const router = useRouter();
+  const { pacienteId = '', nombrePaciente = '' } = useLocalSearchParams();
 
   const irAServicios = () => {
     if (!pacienteId || !nombrePaciente) {
       Alert.alert('Error', 'Datos del paciente no disponibles');
       return;
     }
-    navigation.navigate('Servicios' as never, { pacienteId, nombrePaciente } as never);
+    router.push({
+      pathname: '/View/AgendarCita',
+      params: { pacienteId, nombrePaciente }
+    });
   };
 
   const irACitasAgendadas = () => {
@@ -21,25 +23,29 @@ const AgendaCitaScreen = () => {
       Alert.alert('Error', 'Datos del paciente no disponibles');
       return;
     }
-    navigation.navigate('CitasAgendadas' as never, { pacienteId, nombrePaciente } as never);
+    router.push({
+      pathname: '/View/CitasAgendadas',
+      params: { pacienteId, nombrePaciente }
+    });
   };
 
   return (
     <View style={styles.container}>
-      {/* Iconos arriba */}
-      <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => navigation.navigate('Perfil' as never)}>
-          <Ionicons name="person-circle-outline" size={28} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+      {/* AppBar */}
+     <View style={styles.topBar}>
+       <TouchableOpacity onPress={() => router.push('/View/Perfil')}>
+        <Ionicons name="person-circle-outline" size={28} color="black" />
+       </TouchableOpacity>
+       <TouchableOpacity>
+        <Ionicons name="notifications-outline" size={24} color="black" />
+          </TouchableOpacity>
+    </View>
+
 
       {/* Título */}
       <Text style={styles.title}>{nombrePaciente}, ¿Qué quieres hacer hoy?</Text>
 
-      {/* Tarjeta: Agendar cita */}
+      {/* Agendar Cita */}
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <Ionicons name="calendar-outline" size={30} color="#000" />
@@ -50,7 +56,7 @@ const AgendaCitaScreen = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Tarjeta: Ver citas agendadas */}
+      {/* Citas Agendadas */}
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <Ionicons name="calendar" size={30} color="#000" />
@@ -63,15 +69,15 @@ const AgendaCitaScreen = () => {
 
       {/* Barra inferior */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Configuracion' as never)}>
+        <TouchableOpacity style={styles.navItem}>
           <Ionicons name="settings-outline" size={22} color="#333" />
           <Text style={styles.navText}>Configuración</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home' as never)}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/View/menu')}>
           <Ionicons name="home" size={24} color="#7B61FF" />
           <Text style={[styles.navText, { color: '#7B61FF' }]}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Perfil' as never)}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/View/Perfil')}>
           <FontAwesome5 name="user-circle" size={20} color="#333" />
           <Text style={styles.navText}>Perfil</Text>
         </TouchableOpacity>

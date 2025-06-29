@@ -1,3 +1,4 @@
+// MedicamentosScreen.tsx
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -25,7 +26,6 @@ const MedicamentosScreen = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Ajusta esta URL con tu backend real
     fetch(`https://api.ejemplo.com/pacientes/${pacienteId}/medicamentos`)
       .then(res => res.json())
       .then((data: Medicamento[]) => setMedicamentos(data))
@@ -50,14 +50,14 @@ const MedicamentosScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Parte azul con íconos */}
+      {/* AppBar azul con íconos negros */}
       <View style={styles.header}>
         <View style={styles.topBar}>
           <TouchableOpacity onPress={() => irA('Perfil')}>
-            <Ionicons name="person-circle-outline" size={28} color="white" />
+            <Ionicons name="person-circle-outline" size={28} color="black" />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Ionicons name="notifications-outline" size={24} color="white" />
+            <Ionicons name="notifications-outline" size={24} color="black" />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>{nombrePaciente}, estos son tus medicamentos</Text>
@@ -87,7 +87,7 @@ const MedicamentosScreen = () => {
         <Text style={styles.backText}>Atrás</Text>
       </TouchableOpacity>
 
-      {/* Menú inferior */}
+      {/* Bottom bar blanca */}
       <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem} onPress={() => irA('Configuracion')}>
           <Ionicons name="settings-outline" size={22} color="#333" />
@@ -109,7 +109,7 @@ const MedicamentosScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#2196F3', // azul de fondo igual que menu.tsx
   },
   loader: {
     flex: 1,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#2196F3', // igual que fondo
     paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'white',
   },
   card: {
     flexDirection: 'row',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    backgroundColor: '#f6f0ff',
+    backgroundColor: '#ffffff', // barra blanca
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingVertical: 10,

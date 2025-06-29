@@ -66,12 +66,16 @@ const MedicinaGeneralScreen = () => {
     politicaChecked;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#2196F3' }}>
       {/* Encabezado */}
       <View style={styles.header}>
-        <Ionicons name="person-circle-outline" size={24} color="black" />
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+          <Ionicons name="person-circle-outline" size={24} color="#fff" />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Agenda de medicina general</Text>
-        <Ionicons name="notifications-outline" size={24} color="black" />
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={24} color="#fff" />
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
@@ -107,7 +111,7 @@ const MedicinaGeneralScreen = () => {
         </View>
 
         <View style={styles.separator} />
-        <Text style={styles.subSection}>Centro médico, día, hora y profesional de la salud</Text>
+        <Text style={styles.subSection}>Centro médico, día, hora y profesional</Text>
 
         <View style={styles.fieldGroup}>
           <Text style={styles.label}>Elige el centro médico</Text>
@@ -133,7 +137,7 @@ const MedicinaGeneralScreen = () => {
               display="default"
               minimumDate={new Date()}
               onChange={(event, selectedDate) => {
-                setShowDatePicker(Platform.OS === 'ios');
+                setShowDatePicker(false);
                 if (selectedDate) {
                   const formatted = selectedDate.toISOString().split('T')[0];
                   setFecha(formatted);
@@ -154,7 +158,7 @@ const MedicinaGeneralScreen = () => {
               mode="time"
               display="default"
               onChange={(event, selectedTime) => {
-                setShowTimePicker(Platform.OS === 'ios');
+                setShowTimePicker(false);
                 if (selectedTime) {
                   const formatted = selectedTime.toLocaleTimeString([], {
                     hour: '2-digit',
@@ -184,30 +188,26 @@ const MedicinaGeneralScreen = () => {
             <Ionicons
               name={politicaChecked ? 'checkbox' : 'square-outline'}
               size={24}
-              color="#0277BD"
+              color="#fff"
             />
           </TouchableOpacity>
           <Text style={styles.checkboxLabel}>
-            He leído y acepto política de tratamiento de datos personales y aviso de privacidad.
+            He leído y acepto política de tratamiento de datos personales.
           </Text>
         </View>
 
         <View style={styles.buttonsRow}>
           <TouchableOpacity
             style={[styles.button, styles.backBtn]}
-            onPress={() =>
-              navigation.navigate('AgendaCita' as never, { pacienteId, nombrePaciente } as never)
-            }
+            onPress={() => navigation.navigate('AgendaCita', { pacienteId, nombrePaciente })}
           >
-            <Text style={styles.buttonText}>Atras</Text>
+            <Text style={styles.buttonText}>Atrás</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.button, styles.nextBtn, !canProceed && styles.buttonDisabled]}
             disabled={!canProceed}
-            onPress={() =>
-              navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
-            }
+            onPress={() => navigation.navigate('menu', { pacienteId, nombrePaciente })}
           >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
@@ -216,9 +216,15 @@ const MedicinaGeneralScreen = () => {
 
       {/* Barra inferior */}
       <View style={styles.appBar}>
-        <Ionicons name="settings-outline" size={22} color="#000" />
-        <Ionicons name="home" size={22} color="#673AB7" />
-        <Ionicons name="person-outline" size={22} color="#000" />
+        <TouchableOpacity>
+          <Ionicons name="settings-outline" size={22} color="#000" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('menu')}>
+          <Ionicons name="home" size={22} color="#673AB7" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil', { pacienteId })}>
+          <Ionicons name="person-outline" size={22} color="#000" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -323,7 +329,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderTopWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#EDE7F6'
+    backgroundColor: '#fff'
   }
 });
 

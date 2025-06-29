@@ -9,73 +9,79 @@ const HomeScreen = () => {
 
   const irA = (ruta: string) => {
     router.push({
-      pathname: `/${ruta}`,
+      pathname: `/View/${ruta}`,
       params: { pacienteId, nombrePaciente },
     });
   };
 
   return (
     <View style={styles.container}>
-      {/* Iconos arriba */}
-      <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => irA('Perfil')}>
-          <Ionicons name="person-circle-outline" size={30} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={26} color="white" />
+      {/* AppBar superior */}
+      <View style={styles.topBarContainer}>
+        <View style={styles.topBar}>
+          <TouchableOpacity onPress={() => irA('Perfil')}>
+            <Ionicons name="person-circle-outline" size={30} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Ionicons name="notifications-outline" size={26} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Contenido */}
+      <View style={styles.content}>
+        <Text style={styles.titulo}>Bienvenido {nombrePaciente}!</Text>
+        <Text style={styles.subtitulo}>¿En qué te puedo ayudar hoy?</Text>
+
+        {/* Tarjetas en cuadrícula */}
+        <View style={styles.grid}>
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: '#B2EBF2' }]}
+            onPress={() => irA('Medicamentos')}>
+            <Text style={styles.cardTitulo}>Medicamentos</Text>
+            <Text style={styles.cardTexto}>Recuerda, es importante tomarlos a tiempo para cuidar tu salud.</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: '#FFCDD2' }]}
+            onPress={() => irA('CitasMedicas')}>
+            <Text style={styles.cardTitulo}>Citas médicas</Text>
+            <Text style={styles.cardTexto}>Tu salud es prioridad, no faltes a tu cita</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: '#FFFFFF' }]}
+            onPress={() => irA('HistoriaClinica')}>
+            <Text style={styles.cardTitulo}>Historia clínica</Text>
+            <Text style={styles.cardTexto}>Tu historia clínica es clave para recibir la atención adecuada</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: '#DCEDC8' }]}
+            onPress={() => irA('ImagenesDiagnosticas')}>
+            <Text style={styles.cardTitulo}>Imágenes Diagnósticas</Text>
+            <Text style={styles.cardTexto}>No dejes pasar tus exámenes, pueden marcar la diferencia en tu tratamiento.</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Botón cerrar sesión */}
+        <TouchableOpacity style={styles.logoutBtn} onPress={() => router.replace('/login')}>
+          <Text style={styles.logoutText}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Bienvenida */}
-      <Text style={styles.titulo}>Bienvenido {nombrePaciente}!</Text>
-      <Text style={styles.subtitulo}>¿En qué te puedo ayudar hoy?</Text>
-
-      {/* Tarjetas en cuadrícula */}
-      <View style={styles.grid}>
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: '#B2EBF2' }]}
-          onPress={() => irA('Medicamentos')}>
-          <Text style={styles.cardTitulo}>Medicamentos</Text>
-          <Text style={styles.cardTexto}>Recuerda, es importante tomarlos a tiempo para cuidar tu salud.</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: '#FFCDD2' }]}
-          onPress={() => irA('CitasMedicas')}>
-          <Text style={styles.cardTitulo}>Citas médicas</Text>
-          <Text style={styles.cardTexto}>Tu salud es prioridad, no faltes a tu cita</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: '#FFFFFF' }]}
-          onPress={() => irA('HistoriaClinica')}>
-          <Text style={styles.cardTitulo}>Historia clínica</Text>
-          <Text style={styles.cardTexto}>Tu historia clínica es clave para recibir la atención adecuada</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: '#DCEDC8' }]}
-          onPress={() => irA('ImagenesDiagnosticas')}>
-          <Text style={styles.cardTitulo}>Imágenes Diagnósticas</Text>
-          <Text style={styles.cardTexto}>No dejes pasar tus exámenes, pueden marcar la diferencia en tu tratamiento.</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Botón cerrar sesión */}
-      <TouchableOpacity style={styles.logoutBtn} onPress={() => router.replace('/login')}>
-        <Text style={styles.logoutText}>Cerrar Sesión</Text>
-      </TouchableOpacity>
-
-      {/* Barra inferior */}
+      {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => irA('Configuracion')}>
+        <TouchableOpacity style={styles.navItem}>
           <Ionicons name="settings-outline" size={22} color="#333" />
           <Text style={styles.navText}>Configuración</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => irA('Home')}>
-          <Ionicons name="home" size={24} color="#333" />
-          <Text style={styles.navText}>Inicio</Text>
+
+        <TouchableOpacity style={styles.navItem} onPress={() => irA('menu')}>
+          <Ionicons name="home" size={24} color="#7B61FF" />
+          <Text style={[styles.navText, { color: '#7B61FF' }]}>Inicio</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.navItem} onPress={() => irA('Perfil')}>
           <FontAwesome5 name="user-circle" size={20} color="#333" />
           <Text style={styles.navText}>Perfil</Text>
@@ -88,18 +94,21 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00AEEF',
-    paddingTop: 60,
+    backgroundColor: '#1E88E5',
+  },
+  topBarContainer: {
+    backgroundColor: '#1E88E5',
+    paddingTop: 50,
     paddingHorizontal: 20,
-    paddingBottom: 80,
+    paddingBottom: 10,
   },
   topBar: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    right: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
   },
   titulo: {
     fontSize: 24,

@@ -9,7 +9,6 @@ export default function Login() {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [recordar, setRecordar] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -47,7 +46,6 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Bienvenido ', data);
         router.push({
           pathname: '/View/menu',
           params: {
@@ -56,9 +54,10 @@ export default function Login() {
           }
         });
       } else {
-        console.log('Error al iniciar sesión:', data.message);
+        alert('Correo o contraseña incorrectos');
       }
     } catch (error) {
+      alert('Error al conectar con el servidor');
       console.error('Error de red o servidor:', error);
     }
   };
@@ -69,9 +68,7 @@ export default function Login() {
       style={Estilos.imagen2}
       resizeMode='stretch'>
       <View style={Estilos.contenedorPrincipal}>
-        <Image
-          source={require('../../(tabs)/assets/Logo2.png')}
-          style={Estilos.imagen} />
+        <Image source={require('../../(tabs)/assets/Logo2.png')} style={Estilos.imagen} />
         <AnimacionYa style={Estilos.titulo} duration={2000}>
           LIFE REMINDER
         </AnimacionYa>
@@ -82,13 +79,15 @@ export default function Login() {
               style={Estilos.input}
               placeholder='Correo Eletronico'
               value={correo}
-              onChangeText={setCorreo} />
+              onChangeText={setCorreo}
+            />
             <TextInput
               style={Estilos.input}
               placeholder='Contraseña'
               value={password}
               onChangeText={setPassword}
-              secureTextEntry />
+              secureTextEntry
+            />
             <View style={Estilos.contenedorRecordar}>
               <TouchableOpacity onPress={() => setRecordar(!recordar)}
                 style={[Estilos.checkbox, recordar && Estilos.activo]}>

@@ -9,6 +9,7 @@ import {
   Linking
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 interface Historia {
   id: string;
@@ -44,6 +45,16 @@ const HistorialClinicaScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* AppBar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+          <Ionicons name="person-circle-outline" size={28} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.header}>
         {nombrePaciente}, aquí está tu historial clínico
       </Text>
@@ -70,10 +81,9 @@ const HistorialClinicaScreen = () => {
                 <TouchableOpacity
                   style={[styles.cardButton, styles.viewBtn]}
                   onPress={() =>
-                    navigation.navigate(
-                      'VerHistoriaDetalle' as never,
-                      { historiaId: item.id } as never
-                    )
+                    navigation.navigate('VerHistoriaDetalle', {
+                      historiaId: item.id
+                    })
                   }
                 >
                   <Text style={styles.cardButtonText}>Ver historia</Text>
@@ -84,12 +94,29 @@ const HistorialClinicaScreen = () => {
         />
       )}
 
+      {/* Botón volver */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate('Login' as never)}
+        onPress={() => navigation.navigate('menu')}
       >
         <Text style={styles.backText}>Volver</Text>
       </TouchableOpacity>
+
+      {/* BottomBar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="settings-outline" size={22} color="#333" />
+          <Text style={styles.navText}>Configuración</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('menu')}>
+          <Ionicons name="home" size={24} color="#7B61FF" />
+          <Text style={[styles.navText, { color: '#7B61FF' }]}>Inicio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Perfil')}>
+          <FontAwesome5 name="user-circle" size={20} color="#333" />
+          <Text style={styles.navText}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -104,7 +131,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E1F5FE',
-    padding: 20
+    padding: 20,
+    paddingTop: 60
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10
   },
   header: {
     fontSize: 20,
@@ -164,12 +197,31 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 'auto'
+    marginTop: 10
   },
   backText: {
     color: '#FFF',
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  bottomNav: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: '#f6f0ff',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    borderTopColor: '#ccc',
+    borderTopWidth: 1
+  },
+  navItem: {
+    alignItems: 'center'
+  },
+  navText: {
+    fontSize: 12,
+    color: '#333',
+    marginTop: 2
   }
 });
 

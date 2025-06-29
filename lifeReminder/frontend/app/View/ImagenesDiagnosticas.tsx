@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Linking
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface ImagenDiagnostica {
@@ -39,6 +39,16 @@ const ImagenesDiagnosticasScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* AppBar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+          <Ionicons name="person-circle-outline" size={28} color="#000" />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.title}>Imágenes Diagnósticas</Text>
       <Text style={styles.name}>{nombrePaciente}</Text>
 
@@ -58,11 +68,10 @@ const ImagenesDiagnosticasScreen = () => {
                 >
                   <Text style={styles.cardBtnText}>Descargar</Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   style={styles.cardBtn}
                   onPress={() =>
-                    navigation.navigate('VisorImagenes' as never, { url: img.urlVisor } as never)
+                    navigation.navigate('VisorImagenes', { url: img.urlVisor })
                   }
                 >
                   <Text style={styles.cardBtnText}>Ver Imágenes</Text>
@@ -75,34 +84,24 @@ const ImagenesDiagnosticasScreen = () => {
 
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() =>
-          navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
-        }
+        onPress={() => navigation.navigate('menu')}
       >
         <Text style={styles.backButtonText}>Volver</Text>
       </TouchableOpacity>
 
-      <View style={styles.appBar}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Configuracion' as never, { pacienteId, nombrePaciente } as never)
-          }
-        >
-          <Icon name="cog-outline" size={24} color="#616161" />
+      {/* Bottom Bar */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="settings-outline" size={22} color="#333" />
+          <Text style={styles.navText}>Configuración</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
-          }
-        >
-          <Icon name="home-outline" size={24} color="#039BE5" />
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('menu')}>
+          <Ionicons name="home" size={24} color="#7B61FF" />
+          <Text style={[styles.navText, { color: '#7B61FF' }]}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('Perfil' as never, { pacienteId } as never)
-          }
-        >
-          <Icon name="account-outline" size={24} color="#616161" />
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Perfil')}>
+          <FontAwesome5 name="user-circle" size={20} color="#333" />
+          <Text style={styles.navText}>Perfil</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -112,8 +111,14 @@ const ImagenesDiagnosticasScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00AEEF',
-    paddingTop: 40
+    backgroundColor: '#2196F3',
+    paddingTop: 60
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginBottom: 10
   },
   title: {
     fontSize: 22,
@@ -185,18 +190,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold'
   },
-  appBar: {
+  bottomNav: {
     position: 'absolute',
     bottom: 0,
-    left: 0,
-    right: 0,
-    height: 60,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderColor: '#ccc',
+    width: '100%',
+    backgroundColor: '#f6f0ff',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    paddingVertical: 10,
+    borderTopColor: '#ccc',
+    borderTopWidth: 1
+  },
+  navItem: {
     alignItems: 'center'
+  },
+  navText: {
+    fontSize: 12,
+    color: '#333',
+    marginTop: 2
   }
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
@@ -21,18 +21,17 @@ const SeleccionarServicio = () => {
 
   return (
     <View style={styles.container}>
-      {/* Encabezado */}
+      {/* AppBar */}
       <View style={styles.topBar}>
-        <TouchableOpacity onPress={() => router.push('/Perfil')}>
-          <Ionicons name="person-circle-outline" size={28} color="#fff" />
+        <TouchableOpacity onPress={() => navegarA('Perfil')}>
+          <Ionicons name="person-circle-outline" size={30} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Ionicons name="notifications-outline" size={24} color="#fff" />
+          <Ionicons name="notifications-outline" size={26} color="black" />
         </TouchableOpacity>
       </View>
 
       <Text style={styles.title}>{nombrePaciente}, ¿Qué quieres hacer hoy?</Text>
-
       <Text style={styles.subTitle}>Servicios plan básico de salud</Text>
 
       {/* Medicina General */}
@@ -70,17 +69,17 @@ const SeleccionarServicio = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Menú inferior */}
+      {/* BottomBar */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/Configuracion')}>
+        <TouchableOpacity style={styles.navItem}>
           <Ionicons name="settings-outline" size={22} color="#333" />
           <Text style={styles.navText}>Configuración</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/Home')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navegarA('menu')}>
           <Ionicons name="home" size={24} color="#7B61FF" />
           <Text style={[styles.navText, { color: '#7B61FF' }]}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push('/Perfil')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navegarA('Perfil')}>
           <FontAwesome5 name="user-circle" size={20} color="#333" />
           <Text style={styles.navText}>Perfil</Text>
         </TouchableOpacity>

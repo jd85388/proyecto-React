@@ -66,12 +66,16 @@ const OdontologiaScreen = () => {
     politicaChecked;
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#2196F3' }}>
       {/* Encabezado */}
       <View style={styles.header}>
-        <Ionicons name="person-circle-outline" size={24} color="black" />
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+          <Ionicons name="person-circle-outline" size={24} color="#fff" />
+        </TouchableOpacity>
         <Text style={styles.headerText}>Agenda de odontología general</Text>
-        <Ionicons name="notifications-outline" size={24} color="black" />
+        <TouchableOpacity>
+          <Ionicons name="notifications-outline" size={24} color="#fff" />
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
@@ -184,7 +188,7 @@ const OdontologiaScreen = () => {
             <Ionicons
               name={politicaChecked ? 'checkbox' : 'square-outline'}
               size={24}
-              color="#0277BD"
+              color="#fff"
             />
           </TouchableOpacity>
           <Text style={styles.checkboxLabel}>
@@ -196,18 +200,16 @@ const OdontologiaScreen = () => {
           <TouchableOpacity
             style={[styles.button, styles.backBtn]}
             onPress={() =>
-              navigation.navigate('AgendaCita' as never, { pacienteId, nombrePaciente } as never)
+              navigation.navigate('AgendaCita', { pacienteId, nombrePaciente })
             }
           >
-            <Text style={styles.buttonText}>Atras</Text>
+            <Text style={styles.buttonText}>Atrás</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.button, styles.nextBtn, !canProceed && styles.buttonDisabled]}
             disabled={!canProceed}
-            onPress={() =>
-              navigation.navigate('Home' as never, { pacienteId, nombrePaciente } as never)
-            }
+            onPress={() => navigation.navigate('menu', { pacienteId, nombrePaciente })}
           >
             <Text style={styles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
@@ -216,9 +218,18 @@ const OdontologiaScreen = () => {
 
       {/* Barra inferior */}
       <View style={styles.appBar}>
-        <Ionicons name="settings-outline" size={22} color="#000" />
-        <Ionicons name="home" size={22} color="#673AB7" />
-        <Ionicons name="person-outline" size={22} color="#000" />
+        <TouchableOpacity>
+          <Ionicons name="settings-outline" size={22} color="#000" />
+          <Text style={{ fontSize: 10 }}>Configuración</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('menu')}>
+          <Ionicons name="home" size={22} color="#673AB7" />
+          <Text style={{ fontSize: 10, color: '#673AB7' }}>Inicio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+          <Ionicons name="person-outline" size={22} color="#000" />
+          <Text style={{ fontSize: 10 }}>Perfil</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -323,7 +334,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderTopWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#EDE7F6'
+    backgroundColor: '#fff'
   }
 });
 
