@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import { Cita } from '../View/types';
+import { Cita } from './types';
 
 const CitasAgendadasScreen = () => {
   const router = useRouter();
